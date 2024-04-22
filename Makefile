@@ -46,4 +46,7 @@ docker_migrate:
 	docker-compose run --rm backend python manage.py migrate
 
 docker_startapp:
-	docker-compose run --rm backend python manage.py startapp $(appname)
+	docker-compose run --rm backend python manage.py startapp $(ARG)
+
+docker_create_superuser:
+	docker-compose run backend python manage.py createsuperuser
