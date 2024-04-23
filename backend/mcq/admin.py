@@ -14,11 +14,15 @@ class FeedbackInline(admin.TabularInline):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline, FeedbackInline]
+    prepopulated_fields = {'slug': ('text',)}
+    search_fields = ('text',)
 
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
-    pass
-
+    search_fields = ('name',)
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'description', 'unit', 'year_tested', 'tags', 'paper_type', 'slug')  # include 'slug' here
+    fields = ('title', 'description', 'unit', 'year_tested', 'tags', 'paper_type', 'slug')  # include 'slug' here
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('title',)
