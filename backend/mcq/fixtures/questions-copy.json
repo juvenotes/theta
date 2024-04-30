@@ -16,8 +16,8 @@
     "unit": 1,
     "slug": "end-of-year-2023-test",
     "year_tested": 2023,
-    "paper_type": "EOY",
-    "related_topic": 1
+    "tags": "mcq.Quiz.unit",
+    "paper_type": "EOY"
   }
 },
 {
@@ -26,8 +26,7 @@
   "fields": {
     "text": "A 42-year-old woman has a mass in the posterior aspect of the upper part of her arm that was first noted 3 months earlier. It is not painful and she has no associated symptoms. Magnetic resonance imaging (MRI) demonstrates a 5-cm neoplasm arising from the triceps. The best next step in the management of this patient is?",
     "quiz": 1,
-    "slug": "a-42-year-old-woman-has-a-mass-in-the-posterior-as",
-    "related_topic": 1
+    "slug": "a-42-year-old-woman-has-a-mass-in-the-posterior-as"
   }
 },
 {
@@ -36,8 +35,7 @@
   "fields": {
     "text": "A 27-year-old man is suspected of having acute appendicitis. On physical examination, his abdomen is soft and nondistended. He does not have pain with coughing or reproduction of tenderness in the right lower quadrant when palpated in the left lower quadrant. He experiences abdominal pain during extension of the right thigh while lying on his left side. He does not have pain with passive rotation of his right hip in a flexed position. Where do you suspect the location of the tip of his appendix to be?",
     "quiz": 1,
-    "slug": "a-27-year-old-man-is-suspected-of-having-acute-app",
-    "related_topic": 1
+    "slug": "a-27-year-old-man-is-suspected-of-having-acute-app"
   }
 },
 {
@@ -46,8 +44,7 @@
   "fields": {
     "text": "A 27-year-old man has a 1-day history of right lower quadrant pain and leukocytosis. Probable nonperforated acute appendicitis is diagnosed. What is the best antibiotic and surgical management for this patient?",
     "quiz": 1,
-    "slug": "a-27-year-old-man-has-a-1-day-history-of-right-low",
-    "related_topic": 1
+    "slug": "a-27-year-old-man-has-a-1-day-history-of-right-low"
   }
 },
 {
@@ -56,8 +53,7 @@
   "fields": {
     "text": "A patient with acute respiratory distress syndrome is on mechanical ventilation. During rounds, the team increases the positive end-expiratory pressure from 8 to 12 cm H2O. Which of the following parameters is likely to increase?",
     "quiz": 1,
-    "slug": "a-patient-with-acute-respiratory-distress-syndrome",
-    "related_topic": 1
+    "slug": "a-patient-with-acute-respiratory-distress-syndrome"
   }
 },
 {
@@ -66,8 +62,7 @@
   "fields": {
     "text": "A 53-year-old woman is now postoperative day 10 following a Whipple procedure for pancreatic ductal adenocarcinoma, and she develops a petechial rash. Routine laboratory evaluation is significant for an acute decrease in her platelet count from 150,000/pL to 40,000/uL. She receives a diagnosis of heparin-induced thrombocytopenia. Which of the following is the appropriate management of this condition?",
     "quiz": 1,
-    "slug": "a-53-year-old-woman-is-now-postoperative-day-10-fo",
-    "related_topic": 1
+    "slug": "a-53-year-old-woman-is-now-postoperative-day-10-fo"
   }
 },
 {
@@ -76,8 +71,7 @@
   "fields": {
     "text": "An asymptomatic patient is found to have a serum calcium level of 13.5 mg/dL. Which of the following medications should be avoided?",
     "quiz": 1,
-    "slug": "an-asymptomatic-patient-is-found-to-have-a-serum-c",
-    "related_topic": 1
+    "slug": "an-asymptomatic-patient-is-found-to-have-a-serum-c"
   }
 },
 {

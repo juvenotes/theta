@@ -49,4 +49,7 @@ docker_startapp:
 	docker-compose run --rm backend python manage.py startapp $(ARG)
 
 docker_create_superuser:
-	docker-compose run backend python manage.py createsuperuser
+	docker-compose run --rm backend python manage.py createsuperuser
+
+docker_dumpdata:
+	docker-compose run --rm backend python manage.py dumpdata 
