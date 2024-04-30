@@ -20,9 +20,10 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
     search_fields = ('name',)
+
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'unit', 'year_tested', 'tags', 'paper_type', 'slug')  # include 'slug' here
-    fields = ('title', 'description', 'unit', 'year_tested', 'tags', 'paper_type', 'slug')  # include 'slug' here
+    list_display = ('title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type', 'slug')  # remove 'tags', add 'related_topic'
+    fields = ('title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type', 'slug')  # remove 'tags', add 'related_topic'
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title',)

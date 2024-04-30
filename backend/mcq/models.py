@@ -31,8 +31,9 @@ class Quiz(models.Model):
 
     # New fields, for year and tags when we bundle quizzes and create a unified qbank for a unit if someone wants it
     year_tested = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
-    tags = models.CharField(max_length=255, default=unit)  # default is the unit this quiz belongs to, in future will be topic
+    # tags = models.CharField(max_length=255, default=unit)  # default is the unit this quiz belongs to, in future will be topic
     paper_type = models.CharField(max_length=255, choices=[('EOR', 'End of Rotation'), ('EOY', 'End of Year')], default='EOR')
+    related_topic = models.ForeignKey(Unit, related_name='related_qustions', on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         unique_together = ('unit', 'slug')
@@ -43,8 +44,8 @@ class Quiz(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        if not self.tags:
-            self.tags = str(self.unit)  # convert unit to string
+        if self.related_topic is None:
+            self.related_topic = self.unit
         super().save(*args, **kwargs)
 
 
@@ -53,6 +54,7 @@ class Question(models.Model):
     text = models.TextField()
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     slug = models.SlugField(blank=True)
+    related_topic = models.ForeignKey(Unit, related_name='related_quizzes', on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         unique_together = ('quiz', 'slug')
@@ -63,6 +65,8 @@ class Question(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.text)
+        if self.related_topic is None:
+            self.related_topic = self.unit
         super().save(*args, **kwargs)
 
 # choices model
