@@ -3,9 +3,11 @@ import datetime
 from django.db import models
 from django.utils.text import slugify
 
+from common.models import IndexedTimeStampedModel
+
 
 # unit model
-class Unit(models.Model):
+class Unit(IndexedTimeStampedModel):
     title = models.CharField(max_length=255)
     slug = models.SlugField(blank=True)
 
@@ -21,7 +23,7 @@ class Unit(models.Model):
         super().save(*args, **kwargs)
 
 # quiz model
-class Quiz(models.Model):
+class Quiz(IndexedTimeStampedModel):
     YEAR_CHOICES = [(r,r) for r in range(2000, (datetime.datetime.now().year+1))]
 
     title = models.CharField(max_length=255)
@@ -50,7 +52,7 @@ class Quiz(models.Model):
 
 
 # question model
-class Question(models.Model):
+class Question(IndexedTimeStampedModel):
     text = models.TextField()
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     slug = models.SlugField(blank=True)
