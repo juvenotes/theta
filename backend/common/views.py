@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.views import generic
 
 from rest_framework import status, viewsets
@@ -9,6 +11,9 @@ from rest_framework.response import Response
 class IndexView(generic.TemplateView):
     template_name = "common/index.html"
 
+@login_required
+def profile(request):
+    return render(request, 'common/profile.html')
 
 class RestViewSet(viewsets.ViewSet):
     @action(
