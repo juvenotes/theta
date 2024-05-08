@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Quiz
+from .models import Choice, Feedback, Question, Quiz
 
 
 class QuizAdminForm(forms.ModelForm):

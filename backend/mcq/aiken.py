@@ -21,7 +21,7 @@ lexer = lex.lex()
 
 def p_question(p):
     'question : cmd options answer ANY feedback'
-    p[0] = (p[1].rstrip(), p[2], p[3], p[4])
+    p[0] = (p[1].rstrip(), p[2], p[3], p[5])
 
 def p_cmd(p):
     '''cmd : cmd ANY
@@ -88,7 +88,7 @@ class Aiken(list):
             # string += option.key + '.' + option.value + '\n'
             string += option + '\n'
 
-        string += 'ANSWER: ' + self.answer
+        string += 'ANSWER: ' + self.answer + '\n'
         string += 'FEEDBACK: ' + self.feedback
         return string
 
