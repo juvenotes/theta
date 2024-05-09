@@ -1,12 +1,16 @@
 import datetime
 
 from django.db import models
+from users.models import User
 
 from common.models import IndexedTimeStampedModel
 
 
 # unit model
 class Unit(IndexedTimeStampedModel):
+    owner = models.ForeignKey(User,
+                              related_name='units_created',
+                              on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
 
     class Meta:
@@ -19,6 +23,9 @@ class Unit(IndexedTimeStampedModel):
 class Quiz(IndexedTimeStampedModel):
     YEAR_CHOICES = [(r,r) for r in range(2000, (datetime.datetime.now().year+1))]
 
+    owner = models.ForeignKey(User,
+                              related_name='quizzes_created',
+                              on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
@@ -30,6 +37,7 @@ class Quiz(IndexedTimeStampedModel):
 
     class Meta:
         unique_together = ('title', 'id')
+        verbose_name_plural = "quizzes"
 
     def __str__(self):
         return self.title
