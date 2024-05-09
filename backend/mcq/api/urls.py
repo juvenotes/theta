@@ -1,15 +1,12 @@
-# api/urls.py
-from django.urls import include, path
+# mcq/urls.py
+from django.urls import path
 
-from rest_framework.routers import DefaultRouter
+from .views import QuestionDetailView, QuestionListView, QuizDetailView, QuizListView
 
-from .views import QuestionViewSet, QuizViewSet
-
-
-router = DefaultRouter()
-router.register(r'quizzes', QuizViewSet)
-router.register(r'questions', QuestionViewSet)
 
 urlpatterns = [
-    path('mcq/', include(router.urls)),
+    path('quizzes/', QuizListView.as_view(), name='quiz_list'),
+    path('quizzes/<int:quiz_pk>/', QuizDetailView.as_view(), name='quiz_detail'),
+    path('quizzes/<int:quiz_pk>/questions/', QuestionListView.as_view(), name='question_list'),
+    path('quizzes/<int:quiz_pk>/questions/<int:pk>/', QuestionDetailView.as_view(), name='question_detail'),
 ]
