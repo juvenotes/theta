@@ -44,6 +44,3 @@ docker_makemigrations:
 
 docker_migrate:
 	docker-compose run --rm backend python manage.py migrate
-
-docker_startapp:
-	docker-compose run --rm backend python manage.py startapp $(appname)

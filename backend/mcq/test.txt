@@ -1,0 +1,48 @@
+A 42-year-old woman has a mass in the posterior aspect of the upper part of her arm that was first noted 3 months earlier. It is not painful and she has no associated symptoms. Magnetic resonance imaging (MRI) demonstrates a 5-cm neoplasm arising from the triceps. The best next step in the management of this patient is?
+A. Percutaneous core needle biopsy.
+B. Excisional biopsy.
+C. Fine-needle aspiration (FNA) biopsy.
+D. PET-computed tomography (CT).
+E. Incisional biopsy.
+ANSWER: B
+FEEDBACK: It allows for comprehensive sampling of the 5-cm triceps mass, providing an accurate diagnosis and potentially definitive treatment while minimizing the risk of sampling error associated with other biopsy techniques.
+A 27-year-old man is suspected of having acute appendicitis. On physical examination, his abdomen is soft and nondistended. He does not have pain with coughing or reproduction of tenderness in the right lower quadrant when palpated in the left lower quadrant. He experiences abdominal pain during extension of the right thigh while lying on his left side. He does not have pain with passive rotation of his right hip in a flexed position. Where do you suspect the location of the tip of his appendix to be?
+A. Extraperitoneal and lying anterior to the cecum.
+B. Displaced to the right upper quadrant.
+C. In the pelvis.
+D. Retrocecal over the psoas muscle.
+E. In the left lower quadrant.
+ANSWER: D
+FEEDBACK: Based on the clinical findings including pain during extension of the right thigh while lying on his left side (Rovsing's sign) indicative of retrocecal irritation, the location of the tip of the appendix is most likely retrocecal over the psoas muscle.
+A 27-year-old man has a 1-day history of right lower quadrant pain and leukocytosis. Probable nonperforated acute appendicitis is diagnosed. What is the best antibiotic and surgical management for this patient?
+A. Administer cefazolin perioperatively to reduce the risk of wound infection and then operate.
+B. Begin the administration of broad-spectrum antibiotics perioperatively such as ceftriaxone and Flagyl and proceed with appendectomy.
+C. Begin ceftriaxone and metronidazole (Flagyl) and monitor the patient with serial abdominal examinations, with surgery being reserved in the event that he fails to improve.
+D. Operate and then await the results of the culture of peritoneal fluid obtained during the surgery and tailor the selection of antibiotics accordingly.
+E. Begin clindamycin perioperatively, because Bacteroides fragilis is the most common organism involved in acute appendicitis.
+ANSWER: B
+FEEDBACK: It addresses potential infection and inflammation while simultaneously performing the definitive treatment with appendectomy to prevent progression to perforation and peritonitis.
+A patient with acute respiratory distress syndrome is on mechanical ventilation. During rounds, the team increases the positive end-expiratory pressure from 8 to 12 cm H2O. Which of the following parameters is likely to increase?
+A. Functional residual capacity.
+B. Cardiac output.
+C. Arterial pressure.
+D. Partial pressure of carbon dioxide on repeat arterial blood gas.
+E. Preload.
+ANSWER: C
+FEEDBACK: It will keep alveoli open during expiration, while the other parameters are less likely to significantly change due to PEEP adjustment.
+A 53-year-old woman is now postoperative day 10 following a Whipple procedure for pancreatic ductal adenocarcinoma, and she develops a petechial rash. Routine laboratory evaluation is significant for an acute decrease in her platelet count from 150,000/pL to 40,000/uL. She receives a diagnosis of heparin-induced thrombocytopenia. Which of the following is the appropriate management of this condition?
+A. Convert the patient from unfractionated heparin to low-molecular-weight heparin.
+B. Give a platelet transfusion to a goal of more than 50,000/uL.
+C. Discontinue unfractionated heparin and begin a direct thrombin inhibitor.
+D. Discontinue unfractionated heparin as the patient no longer requires anticoagulation.
+E. Continue unfractionated heparin and add a second agent, either a vitamin K antagonist or a direct thrombin inhibitor.
+ANSWER: C
+FEEDBACK: It effectively prevents thrombosis without exacerbating HIT-related complications.
+An asymptomatic patient is found to have a serum calcium level of 13.5 mg/dL. Which of the following medications should be avoided?
+A. Thiazide diuretics.
+B. Calcitonin.
+C. Corticosteroids.
+D. Mithramycin.
+E. Bisphosphonates.
+ANSWER: D
+FEEDBACK: Debatable, but it is an antineoplastic agent that can further decrease calcium levels, potentially exacerbating hypercalcemia and its associated symptoms.
