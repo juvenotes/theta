@@ -12,7 +12,7 @@ test_reset:
 	poetry run backend/manage.py test backend/ $(ARG) --parallel
 
 backend_format:
-	black backend 
+	black backend
 
 # Commands for Docker version
 docker_setup:
@@ -44,3 +44,12 @@ docker_makemigrations:
 
 docker_migrate:
 	docker-compose run --rm backend python manage.py migrate
+
+docker_startapp:
+	docker-compose run --rm backend python manage.py startapp $(ARG)
+
+docker_create_superuser:
+	docker-compose run --rm backend python manage.py createsuperuser
+
+docker_dumpdata:
+	docker-compose run --rm backend python manage.py dumpdata 
