@@ -3,6 +3,8 @@ import collections
 import ply.lex as lex
 import ply.yacc as yacc
 
+from .models import Choice, Feedback, Question
+
 
 tokens = ('ANSWER', 'OPTION', 'ANY', 'FEEDBACK')
 
@@ -50,7 +52,6 @@ def p_error(p):
         print(f"Syntax error at '{p.value}', line {p.lineno}")
         print(f"Error type: Unexpected {p.type}")
         print(f"Error position: {p.lexpos}")
-        print(f"Entire p object: {p}")
     else:
         print("Syntax error at EOF")
 
@@ -92,7 +93,22 @@ class Aiken(list):
         string += 'FEEDBACK: ' + self.feedback
         return string
 
-def load(file_or_string):
+    def save_to_db(self, quiz):
+        # Create a new question in the database with self.question as the text
+        question = Question(text=self.question, quiz=quiz)
+        question.save()
+
+        # Create new choices in the database for each option
+        for option_text in self.options:
+            is_correct = option_text == self.answer
+            choice = Choice(text=option_text, is_correct=is_correct, question=question)
+            choice.save()
+
+        # Create a new feedback in the database
+        feedback = Feedback(text=self.feedback, question=question)
+        feedback.save()
+
+def load(file_or_string, quiz):
     """
     Load a file or string in the Aiken format and return a parsed object.
 
@@ -138,7 +154,15 @@ def load(file_or_string):
     aiken.answer = ast[2]
     aiken.question = ast[0]
     aiken.feedback = ast[3]
+    print(aiken.options)
+
+    # Save the parsed question to the database
+    aiken.save_to_db(quiz)
+
     return aiken
+
+
+
 
 def dump(aiken, file=None):
     """

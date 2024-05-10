@@ -1,9 +1,9 @@
 import datetime
 
 from django.db import models
-from users.models import User
 
 from common.models import IndexedTimeStampedModel
+from users.models import User
 
 
 # unit model
