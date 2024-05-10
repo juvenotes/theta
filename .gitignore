@@ -7,8 +7,8 @@ db.sqlite3-journal
 /backend/.env.example
 /backend/juvenotes/settings/local.py
 /backend/juvenotes/settings/local.py.example
-/backend/juvenotes/mcq/parser.out
-/backend/juvenotes/mcq/parsetab.py
+/backend/mcq/parser.out
+/backend/mcq/parsetab.py
 **/settings/local.py
 /staticfiles/*
 /mediafiles/*
