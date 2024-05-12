@@ -5,9 +5,10 @@ from ..models import Choice, Feedback, Question, Quiz
 
 
 class QuizSerializer(serializers.ModelSerializer):
+    file = serializers.FileField(required=False)
     class Meta:
         model = Quiz
-        fields = '__all__'
+        fields = ['id', 'unit', 'title', 'description', 'file', 'year_tested', 'paper_type', 'related_topic']
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
