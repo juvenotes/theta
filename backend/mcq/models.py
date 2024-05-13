@@ -1,9 +1,9 @@
 import datetime
 
 from django.db import models
-from users.models import User
 
 from common.models import IndexedTimeStampedModel
+from users.models import User
 
 
 # unit model
@@ -69,18 +69,17 @@ class Question(IndexedTimeStampedModel):
 class Choice(models.Model):
     text = models.TextField()
     is_correct = models.BooleanField(default=False)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
 
 
     def __str__(self):
-        return self.text
+        return f"Choice(text={self.text}, is_correct={self.is_correct})"
 
 
 # feedback model
 class Feedback(models.Model):
     text = models.TextField()
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='feedback', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text
-

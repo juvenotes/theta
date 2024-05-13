@@ -639,17 +639,6 @@ asgiref = ">=3.6"
 Django = ">=3.2"
 
 [[package]]
-name = "django-tagging"
-version = "0.5.0"
-description = "Generic tagging application for Django"
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-tagging-0.5.0.tar.gz", hash = "sha256:28d68fa4831705e51ad7d1e845ed6dd9e354f9b6f8a5f63b655a430646ef4e8d"},
-    {file = "django_tagging-0.5.0-py3-none-any.whl", hash = "sha256:5932ddcac9aec67cf605eeee06e9c498a022d145fa38d00c82088510d221f315"},
-]
-
-[[package]]
 name = "django-webpack-loader"
 version = "3.1.0"
 description = "Transparently use webpack with django"
@@ -1645,4 +1634,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "b6d2c94ec3a2a68059b3abd3014d09606713f57d144462b9f59510b63431a920"
+content-hash = "7caa93299793fe626ab7412e72ba70917643b9455e1f95d7cf3ac2148fccf6d5"

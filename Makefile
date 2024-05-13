@@ -43,4 +43,13 @@ docker_makemigrations:
 	docker compose run --rm backend python manage.py makemigrations
 
 docker_migrate:
-	docker compose run --rm backend python manage.py migrate
+	docker-compose run --rm backend python manage.py migrate
+
+docker_startapp:
+	docker-compose run --rm backend python manage.py startapp $(ARG)
+
+docker_create_superuser:
+	docker-compose run --rm backend python manage.py createsuperuser
+
+docker_dumpdata:
+	docker-compose run --rm backend python manage.py dumpdata 
