@@ -10,6 +10,7 @@ from ..aiken import load
 from ..models import Question, Quiz
 from .serializers import QuestionSerializer, QuizSerializer
 
+
 class QuizListView(generics.ListAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
@@ -23,6 +24,11 @@ class QuizDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
+    def destroy(self, request, *args, **kwargs):
+        quiz = self.get_object()
+        quiz.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class QuestionListView(generics.ListCreateAPIView):
     serializer_class = QuestionSerializer
@@ -34,7 +40,7 @@ class QuestionListView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file', None)
         if file:
-            questions = load(file)  # use your aiken.py module to parse the file
+            questions = load(file)
             quiz = get_object_or_404(Quiz, pk=self.kwargs['quiz_pk'])
             for question_data in questions:
                 question = Question(quiz=quiz, **question_data)
@@ -47,3 +53,8 @@ class QuestionDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         return get_object_or_404(Question, quiz_id=self.kwargs['quiz_pk'], pk=self.kwargs['question_pk'])
+
+    def destroy(self, request, *args, **kwargs):
+        question = self.get_object()
+        question.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
