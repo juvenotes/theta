@@ -1,0 +1,838 @@
+openapi: 3.0.3
+info:
+  title: Juvenotes API
+  version: 0.1.0
+  description: Endpoints to manage our application
+paths:
+  /api/mcq/quizzes/:
+    get:
+      operationId: mcq_quizzes_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - mcq
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedQuizList'
+          description: ''
+  /api/mcq/quizzes/{id}/:
+    get:
+      operationId: mcq_quizzes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+          description: ''
+    put:
+      operationId: mcq_quizzes_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+          description: ''
+    patch:
+      operationId: mcq_quizzes_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuiz'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuiz'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuiz'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+          description: ''
+    delete:
+      operationId: mcq_quizzes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/mcq/quizzes/{quiz_pk}/questions/:
+    get:
+      operationId: mcq_quizzes_questions_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: path
+        name: quiz_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedQuestionList'
+          description: ''
+    post:
+      operationId: mcq_quizzes_questions_create
+      parameters:
+      - in: path
+        name: quiz_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+  /api/mcq/quizzes/{quiz_pk}/questions/{question_pk}/:
+    get:
+      operationId: mcq_quizzes_questions_retrieve
+      parameters:
+      - in: path
+        name: question_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: quiz_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    put:
+      operationId: mcq_quizzes_questions_update
+      parameters:
+      - in: path
+        name: question_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: quiz_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    patch:
+      operationId: mcq_quizzes_questions_partial_update
+      parameters:
+      - in: path
+        name: question_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: quiz_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    delete:
+      operationId: mcq_quizzes_questions_destroy
+      parameters:
+      - in: path
+        name: question_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: quiz_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - mcq
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/mcq/quizzes/create/:
+    post:
+      operationId: mcq_quizzes_create_create
+      tags:
+      - mcq
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Quiz'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+          description: ''
+  /api/rest/rest-check/:
+    get:
+      operationId: rest_rest_check_retrieve
+      description: This endpoint checks if the REST API is working.
+      summary: Check REST API
+      tags:
+      - rest
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          description: Successful Response
+  /api/users/:
+    get:
+      operationId: users_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
+          description: ''
+    post:
+      operationId: users_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/{id}/:
+    get:
+      operationId: users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Choice:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+        is_correct:
+          type: boolean
+        question:
+          type: integer
+      required:
+      - id
+      - question
+      - text
+    Feedback:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+        question:
+          type: integer
+      required:
+      - id
+      - question
+      - text
+    PaginatedQuestionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+    PaginatedQuizList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Quiz'
+    PaginatedUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PaperTypeEnum:
+      enum:
+      - EOR
+      - EOY
+      type: string
+      description: |-
+        * `EOR` - End of Rotation
+        * `EOY` - End of Year
+    PatchedQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+        quiz:
+          type: integer
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Choice'
+        feedbacks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Feedback'
+    PatchedQuiz:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        unit:
+          type: integer
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        file:
+          type: string
+          format: uri
+        year_tested:
+          allOf:
+          - $ref: '#/components/schemas/YearTestedEnum'
+          title: Year
+          minimum: -2147483648
+          maximum: 2147483647
+        paper_type:
+          $ref: '#/components/schemas/PaperTypeEnum'
+        related_topic:
+          type: integer
+          nullable: true
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        is_active:
+          type: boolean
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        is_staff:
+          type: boolean
+          description: Designates whether the user can log into this admin site.
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        modified:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+        quiz:
+          type: integer
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Choice'
+        feedbacks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Feedback'
+      required:
+      - choices
+      - feedbacks
+      - id
+      - quiz
+      - text
+    Quiz:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        unit:
+          type: integer
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        file:
+          type: string
+          format: uri
+        year_tested:
+          allOf:
+          - $ref: '#/components/schemas/YearTestedEnum'
+          title: Year
+          minimum: -2147483648
+          maximum: 2147483647
+        paper_type:
+          $ref: '#/components/schemas/PaperTypeEnum'
+        related_topic:
+          type: integer
+          nullable: true
+      required:
+      - description
+      - id
+      - title
+      - unit
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        is_active:
+          type: boolean
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        is_staff:
+          type: boolean
+          description: Designates whether the user can log into this admin site.
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        modified:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - created
+      - email
+      - id
+      - modified
+    YearTestedEnum:
+      enum:
+      - 2000
+      - 2001
+      - 2002
+      - 2003
+      - 2004
+      - 2005
+      - 2006
+      - 2007
+      - 2008
+      - 2009
+      - 2010
+      - 2011
+      - 2012
+      - 2013
+      - 2014
+      - 2015
+      - 2016
+      - 2017
+      - 2018
+      - 2019
+      - 2020
+      - 2021
+      - 2022
+      - 2023
+      - 2024
+      type: integer
+      description: |-
+        * `2000` - 2000
+        * `2001` - 2001
+        * `2002` - 2002
+        * `2003` - 2003
+        * `2004` - 2004
+        * `2005` - 2005
+        * `2006` - 2006
+        * `2007` - 2007
+        * `2008` - 2008
+        * `2009` - 2009
+        * `2010` - 2010
+        * `2011` - 2011
+        * `2012` - 2012
+        * `2013` - 2013
+        * `2014` - 2014
+        * `2015` - 2015
+        * `2016` - 2016
+        * `2017` - 2017
+        * `2018` - 2018
+        * `2019` - 2019
+        * `2020` - 2020
+        * `2021` - 2021
+        * `2022` - 2022
+        * `2023` - 2023
+        * `2024` - 2024
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
