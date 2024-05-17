@@ -11,6 +11,7 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 from rest_framework.routers import DefaultRouter
+from users.routes import routes as users_routes
 
 
 router = DefaultRouter()
