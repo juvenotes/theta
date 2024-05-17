@@ -4,9 +4,7 @@ db.sqlite3-journal
 .DS_Store
 .env
 /backend/.env
-/backend/.env.example
 /backend/juvenotes/settings/local.py
-/backend/juvenotes/settings/local.py.example
 /backend/mcq/parser.out
 /backend/mcq/parsetab.py
 **/settings/local.py
