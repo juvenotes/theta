@@ -145,6 +145,8 @@ Send us an email at contact@vintasoftware.com telling us a bit more about how ou
     `poetry run python manage.py makemigrations`
 -   Run the migrations:
     `poetry run python manage.py migrate`
+-   Generate the OpenAPI schema:
+    `poetry run python manage.py spectacular --color --file schema.yml`  
 -   Run the project:
     `poetry run python manage.py runserver`
 -   Open a browser and go to `http://localhost:8000` to see the project running
