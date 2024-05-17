@@ -565,6 +565,20 @@ Django = "*"
 redis = "*"
 
 [[package]]
+name = "django-guid"
+version = "3.5.0"
+description = "Middleware that enables single request-response cycle tracing by injecting a unique ID into project logs"
+optional = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "django_guid-3.5.0-py3-none-any.whl", hash = "sha256:28f52cfeac47e8e22ea889a3845bc2b1c604dd842e495dadd44ad5184db72c76"},
+    {file = "django_guid-3.5.0.tar.gz", hash = "sha256:5f32f70287e4f36addc79f29f2a7b2f56fc5f4e4cfb2023141525be8baa35d9e"},
+]
+
+[package.dependencies]
+django = {version = ">=4.0,<6.0", markers = "python_version >= \"3.10\""}
+
+[[package]]
 name = "django-import-export"
 version = "3.3.9"
 description = "Django application and library for importing and exporting data with included admin integration."
@@ -1634,4 +1648,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "7caa93299793fe626ab7412e72ba70917643b9455e1f95d7cf3ac2148fccf6d5"
+content-hash = "fcb01699d5109ae1e487f3e717f76b513f506838bd78fbc970a421b4d0a312bc"
