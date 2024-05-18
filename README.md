@@ -52,9 +52,11 @@ Also, includes a Render.com `render.yaml` and a working Django `production.py` s
 
 -   `django` for building backend logic using Python
 -   `djangorestframework` for building a REST API on top of Django
+-   `drf-spectacular` for generating an OpenAPI schema for the Django REST API
 -   `django-webpack-loader` for rendering the bundled frontend assets
 -   `django-js-reverse` for easy handling of Django URLs on JS
 -   `django-upgrade` for automatically upgrading Django code to the target version on pre-commit
+-   `django-guid` for adding a unique correlation ID to log messages from Django requests
 -   `psycopg2` for using PostgreSQL database
 -   `sentry-sdk` for error monitoring
 -   `python-decouple` for reading environment variables on settings files
@@ -143,6 +145,8 @@ Send us an email at contact@vintasoftware.com telling us a bit more about how ou
     `poetry run python manage.py makemigrations`
 -   Run the migrations:
     `poetry run python manage.py migrate`
+-   Generate the OpenAPI schema:
+    `poetry run python manage.py spectacular --color --file schema.yml`  
 -   Run the project:
     `poetry run python manage.py runserver`
 -   Open a browser and go to `http://localhost:8000` to see the project running
@@ -154,6 +158,9 @@ Send us an email at contact@vintasoftware.com telling us a bit more about how ou
 #### Setup Redis
 
 - Ensure that Redis is already installed on your system. Once confirmed, run `redis-server --port 6379` to start the Redis server.
+- If you wish to use Redis for Celery, you need to set the `CELERY_BROKER_URL` environment variable in the `backend/.env` file to `redis://localhost:6379/0`.
+    -   The `/0` at the end of the URL specifies the database number on the Redis server. Redis uses a zero-based numbering system for databases, so `0` is the first database. If you don't specify a database number, Redis will use the first database by default.
+    -   Note: Prefer RabbitMQ over Redis for Broker, mainly because RabbitMQ doesn't need visibility timeout. See [Recommended Celery Django settings for reliability](https://gist.github.com/fjsj/da41321ac96cf28a96235cb20e7236f6).
 
 #### Mailhog
 
@@ -173,6 +180,20 @@ Will run django tests using `--keepdb` and `--parallel`. You may pass a path to 
 ### Adding new pypi libs
 
 To add a new **backend** dependency, run `poetry add {dependency}`. If the dependency should be only available for development user append `-G dev` to the command.
+
+### API Schema
+
+We use the DRF-Spectacular tool to generate an OpenAPI schema from our Django Rest Framework API. The OpenAPI schema serves as the backbone for generating client code, creating comprehensive API documentation, and more.
+
+The API documentation pages are accessible at `http://localhost:8000/api/schema/swagger-ui/` or `http://localhost:8000/api/schema/redoc/`.
+
+> [!IMPORTANT]
+> Anytime a view is created, updated, or removed, the schema must be updated to reflect the changes. Failing to do so can lead to outdated client code or documentation.
+> 
+> To update the schema, run:
+> - If you are using Docker: `make docker_backend_update_schema`
+> - If you are not using Docker: `poetry run python manage.py spectacular --color --file schema.yml`
+
 
 ## Github Actions
 
