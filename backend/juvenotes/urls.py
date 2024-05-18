@@ -39,10 +39,4 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    # path("mcq/", include("mcq.urls"), name="mcq"),
-    path('api/mcq/', include('mcq.api.urls')), 
-    path('accounts/login/', auth_views.LoginView.as_view(),
-         name='login'),
-    path('accounts/logout/', auth_views.LogoutView.as_view(),
-         name='logout'),
 ]
