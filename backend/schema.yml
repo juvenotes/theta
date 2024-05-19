@@ -24,6 +24,7 @@ paths:
       - mcq
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -44,6 +45,7 @@ paths:
       - mcq
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -75,6 +77,7 @@ paths:
         required: true
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -105,6 +108,7 @@ paths:
               $ref: '#/components/schemas/PatchedQuiz'
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -124,6 +128,7 @@ paths:
       - mcq
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -152,6 +157,7 @@ paths:
       - mcq
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -180,6 +186,7 @@ paths:
         required: true
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -205,6 +212,7 @@ paths:
       - mcq
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -241,6 +249,7 @@ paths:
         required: true
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -276,6 +285,7 @@ paths:
               $ref: '#/components/schemas/PatchedQuestion'
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -300,6 +310,7 @@ paths:
       - mcq
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -322,6 +333,7 @@ paths:
         required: true
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -338,6 +350,7 @@ paths:
       - rest
       security:
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -362,6 +375,7 @@ paths:
       - users
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -387,6 +401,8 @@ paths:
         required: true
       security:
       - cookieAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -408,6 +424,7 @@ paths:
       - users
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -440,6 +457,7 @@ paths:
         required: true
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -471,6 +489,7 @@ paths:
               $ref: '#/components/schemas/PatchedUser'
       security:
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -491,11 +510,258 @@ paths:
       - users
       security:
       - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/login/:
+    post:
+      operationId: users_login_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /api/users/logout/:
+    post:
+      operationId: users_logout_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/personalization/:
+    get:
+      operationId: users_personalization_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdditionalInfoList'
+          description: ''
+    post:
+      operationId: users_personalization_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+  /api/users/personalization/{id}/:
+    get:
+      operationId: users_personalization_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+    put:
+      operationId: users_personalization_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+    patch:
+      operationId: users_personalization_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdditionalInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdditionalInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdditionalInfo'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+    delete:
+      operationId: users_personalization_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
 components:
   schemas:
+    AdditionalInfo:
+      type: object
+      properties:
+        role:
+          oneOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        graduation_year:
+          allOf:
+          - $ref: '#/components/schemas/GraduationYearEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        student_profession:
+          $ref: '#/components/schemas/StudentProfessionEnum'
+        institution:
+          $ref: '#/components/schemas/InstitutionEnum'
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    BlankEnum:
+      enum:
+      - ''
     Choice:
       type: object
       properties:
@@ -526,6 +792,103 @@ components:
       - id
       - question
       - text
+    GraduationYearEnum:
+      enum:
+      - 2000
+      - 2001
+      - 2002
+      - 2003
+      - 2004
+      - 2005
+      - 2006
+      - 2007
+      - 2008
+      - 2009
+      - 2010
+      - 2011
+      - 2012
+      - 2013
+      - 2014
+      - 2015
+      - 2016
+      - 2017
+      - 2018
+      - 2019
+      - 2020
+      - 2021
+      - 2022
+      - 2023
+      - 2024
+      type: integer
+      description: |-
+        * `2000` - 2000
+        * `2001` - 2001
+        * `2002` - 2002
+        * `2003` - 2003
+        * `2004` - 2004
+        * `2005` - 2005
+        * `2006` - 2006
+        * `2007` - 2007
+        * `2008` - 2008
+        * `2009` - 2009
+        * `2010` - 2010
+        * `2011` - 2011
+        * `2012` - 2012
+        * `2013` - 2013
+        * `2014` - 2014
+        * `2015` - 2015
+        * `2016` - 2016
+        * `2017` - 2017
+        * `2018` - 2018
+        * `2019` - 2019
+        * `2020` - 2020
+        * `2021` - 2021
+        * `2022` - 2022
+        * `2023` - 2023
+        * `2024` - 2024
+    InstitutionEnum:
+      enum:
+      - UON
+      - KU
+      - AKU
+      - MKU
+      - JKUAT
+      - EG
+      - MMUST
+      - MSU
+      type: string
+      description: |-
+        * `UON` - University of Nairobi
+        * `KU` - Kenyatta University
+        * `AKU` - Aga Khan University
+        * `MKU` - Mount Kenya University
+        * `JKUAT` - JKUAT
+        * `EG` - Egerton
+        * `MMUST` - MMUST
+        * `MSU` - Maseno University
+    PaginatedAdditionalInfoList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalInfo'
     PaginatedQuestionList:
       type: object
       required:
@@ -603,6 +966,22 @@ components:
       description: |-
         * `EOR` - End of Rotation
         * `EOY` - End of Year
+    PatchedAdditionalInfo:
+      type: object
+      properties:
+        role:
+          oneOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        graduation_year:
+          allOf:
+          - $ref: '#/components/schemas/GraduationYearEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        student_profession:
+          $ref: '#/components/schemas/StudentProfessionEnum'
+        institution:
+          $ref: '#/components/schemas/InstitutionEnum'
     PatchedQuestion:
       type: object
       properties:
@@ -654,19 +1033,29 @@ components:
         id:
           type: integer
           readOnly: true
+        username:
+          type: string
+          nullable: true
+          maxLength: 255
         email:
           type: string
           format: email
           maxLength: 255
+        password:
+          type: string
+          writeOnly: true
         is_active:
           type: boolean
+          readOnly: true
           description: Designates whether this user should be treated as active. Unselect
             this instead of deleting accounts.
         is_staff:
           type: boolean
+          readOnly: true
           description: Designates whether the user can log into this admin site.
         is_superuser:
           type: boolean
+          readOnly: true
           title: Superuser status
           description: Designates that this user has all permissions without explicitly
             assigning them.
@@ -681,6 +1070,7 @@ components:
         last_login:
           type: string
           format: date-time
+          readOnly: true
           nullable: true
     Question:
       type: object
@@ -738,25 +1128,63 @@ components:
       - id
       - title
       - unit
+    RoleEnum:
+      enum:
+      - ST
+      - PR
+      type: string
+      description: |-
+        * `ST` - Student
+        * `PR` - Professional
+    StudentProfessionEnum:
+      enum:
+      - MS
+      - NS
+      - PS
+      - DS
+      - DR
+      - NR
+      - PH
+      - DT
+      type: string
+      description: |-
+        * `MS` - Medical Student
+        * `NS` - Nursing Student
+        * `PS` - Pharmacy Student
+        * `DS` - Dental Surgery Student
+        * `DR` - Doctor
+        * `NR` - Nurse
+        * `PH` - Pharmacist
+        * `DT` - Dentist
     User:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
+        username:
+          type: string
+          nullable: true
+          maxLength: 255
         email:
           type: string
           format: email
           maxLength: 255
+        password:
+          type: string
+          writeOnly: true
         is_active:
           type: boolean
+          readOnly: true
           description: Designates whether this user should be treated as active. Unselect
             this instead of deleting accounts.
         is_staff:
           type: boolean
+          readOnly: true
           description: Designates whether the user can log into this admin site.
         is_superuser:
           type: boolean
+          readOnly: true
           title: Superuser status
           description: Designates that this user has all permissions without explicitly
             assigning them.
@@ -771,12 +1199,18 @@ components:
         last_login:
           type: string
           format: date-time
+          readOnly: true
           nullable: true
       required:
       - created
       - email
       - id
+      - is_active
+      - is_staff
+      - is_superuser
+      - last_login
       - modified
+      - password
     YearTestedEnum:
       enum:
       - 2000
@@ -836,3 +1270,8 @@ components:
       type: apiKey
       in: cookie
       name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
