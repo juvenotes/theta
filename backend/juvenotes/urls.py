@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.urls import include, path
-
 from django.contrib.auth import views as auth_views
+from django.urls import include, path
 
 import django_js_reverse.views
 from common.routes import routes as common_routes
@@ -27,7 +26,7 @@ urlpatterns = [
     path("admin/defender/", include("defender.urls")),
     path("jsreverse/", django_js_reverse.views.urls_js, name="js_reverse"),
     path("api/", include(router.urls), name="api"),
-        # drf-spectacular
+    # drf-spectacular
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/schema/swagger-ui/",
