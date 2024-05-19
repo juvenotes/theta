@@ -7,21 +7,21 @@ jobs:
     strategy:
       matrix:
         python: [3.12]
-        node: [18.16]
+        node: [20.13]
     env:
       DATABASE_URL: "sqlite:///"
       REDIS_URL: "redis://"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Store branch and latest SHA
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
         id: git
       - name: Setup Python ${{ matrix.python }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
       - name: Setup Node ${{ matrix.node }}
@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         env:
           cache_name: node-modules-cache
         with:
@@ -40,7 +40,7 @@ jobs:
             build-${{ env.cache_name }}-${{ steps.git.outputs.branch }}
             build-${{ env.cache_name }}
       - name: Cache pip
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         env:
           cache_name: pip-cache
         with:
