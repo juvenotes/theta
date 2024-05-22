@@ -672,6 +672,20 @@ asgiref = ">=3.6"
 Django = ">=3.2"
 
 [[package]]
+name = "django-unfold"
+version = "0.24.0"
+description = "Modern Django admin theme for seamless interface development"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_unfold-0.24.0-py3-none-any.whl", hash = "sha256:8d3b02d166b6700cd77cd6ebcf28f007f6325167da00512594ce167c2a53685f"},
+    {file = "django_unfold-0.24.0.tar.gz", hash = "sha256:90522496f63cbe6665ad664c9372ca2227b06343b7477f5b9818b46b6dd09686"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+
+[[package]]
 name = "django-webpack-loader"
 version = "3.1.0"
 description = "Transparently use webpack with django"
@@ -941,23 +955,6 @@ sqlalchemy = ["sqlalchemy (>=1.4.48,<2.1)"]
 sqs = ["boto3 (>=1.26.143)", "pycurl (>=7.43.0.5)", "urllib3 (>=1.26.16)"]
 yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=2.8.0)"]
-
-[[package]]
-name = "lark"
-version = "1.1.9"
-description = "a modern parsing library"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "lark-1.1.9-py3-none-any.whl", hash = "sha256:a0dd3a87289f8ccbb325901e4222e723e7d745dbfc1803eaf5f3d2ace19cf2db"},
-    {file = "lark-1.1.9.tar.gz", hash = "sha256:15fa5236490824c2c4aba0e22d2d6d823575dcaf4cdd1848e34b6ad836240fba"},
-]
-
-[package.extras]
-atomic-cache = ["atomicwrites"]
-interegular = ["interegular (>=0.3.1,<0.4.0)"]
-nearley = ["js2py"]
-regex = ["regex"]
 
 [[package]]
 name = "markuppy"
@@ -1871,4 +1868,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "09e101bcc9bc75bb6aa83336576d416c6b012ef6b2ed796664a4b42551271d92"
+content-hash = "dfe2b77d99f889e54a883d2c204489d60dbe2af1db75fb9df997ba13220d5f84"
