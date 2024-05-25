@@ -11,6 +11,7 @@ DEBUG = False
 SECRET_KEY = config("SECRET_KEY")
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASES["default"]["OPTIONS"] = {'sslmode': 'require'}
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
