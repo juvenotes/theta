@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "defender",
     "django_guid",
+    "anymail",
     "common",
     "users",
     "mcq",
