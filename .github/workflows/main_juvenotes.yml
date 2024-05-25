@@ -41,11 +41,11 @@ jobs:
       #     echo "-----> Running manage.py check --deploy --fail-level WARNING"
       #     poetry run backend/manage.py check --deploy --fail-level WARNING
 
-      - name: Collect static files
-        run: |
-          echo "-----> Running collectstatic"
-          echo "-----> Collecting static files"
-          poetry run backend/manage.py collectstatic --noinput
+      # - name: Collect static files
+      #   run: |
+      #     echo "-----> Running collectstatic"
+      #     echo "-----> Collecting static files"
+      #     poetry run backend/manage.py collectstatic --noinput
 
       - name: Run migrations
         run: |
