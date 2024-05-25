@@ -23,29 +23,38 @@ jobs:
         with:
           node-version: '20' 
 
-      - name: Install dependencies
+      - name: Build frontend
         run: |
           echo "-----> Build frontend"
           npm install
           npm run build
           echo "-----> Build frontend done"
-          echo "-----> Poetry install"
+
+      - name: Set up Python environment
+        run: |
           python -m venv venv
           source venv/bin/activate
+
+      - name: Install Poetry
+        run: |
+          echo "-----> Poetry install"
           pip install poetry
+
+      - name: Install Python dependencies
+        run: |
           poetry install --without dev --no-root --no-interaction
           echo "-----> Poetry done"
 
-      # - name: Check Django settings
-      #   run: |
-      #     echo "-----> Running manage.py check --deploy --fail-level WARNING"
-      #     poetry run backend/manage.py check --deploy --fail-level WARNING
+      - name: Check Django settings
+        run: |
+          echo "-----> Running manage.py check --deploy --fail-level WARNING"
+          poetry run backend/manage.py check --deploy --fail-level WARNING
 
-      # - name: Collect static files
-      #   run: |
-      #     echo "-----> Running collectstatic"
-      #     echo "-----> Collecting static files"
-      #     poetry run backend/manage.py collectstatic --noinput
+      - name: Collect static files
+        run: |
+          echo "-----> Running collectstatic"
+          echo "-----> Collecting static files"
+          poetry run backend/manage.py collectstatic --noinput
 
       - name: Run migrations
         run: |
