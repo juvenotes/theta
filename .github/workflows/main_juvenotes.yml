@@ -34,6 +34,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+          echo "DJANGO_SETTINGS_MODULE=juvenotes.settings.production" >> $GITHUB_ENV
 
       - name: Install Poetry
         run: |
