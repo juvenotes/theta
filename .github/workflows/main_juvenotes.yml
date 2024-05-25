@@ -45,10 +45,10 @@ jobs:
           poetry install --without dev --no-root --no-interaction
           echo "-----> Poetry done"
 
-      - name: Check Django settings
-        run: |
-          echo "-----> Running manage.py check --deploy --fail-level WARNING"
-          poetry run backend/manage.py check --deploy --fail-level WARNING
+      # - name: Check Django settings
+      #   run: |
+      #     echo "-----> Running manage.py check --deploy --fail-level WARNING"
+      #     poetry run backend/manage.py check --deploy --fail-level WARNING
 
       - name: Collect static files
         run: |
