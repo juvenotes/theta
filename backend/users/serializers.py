@@ -1,7 +1,6 @@
 from django.contrib.auth.hashers import make_password
-
 from rest_framework import serializers
-
+from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,3 +34,15 @@ class AdditionalInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['role', 'graduation_year', 'student_profession', 'institution']
+
+class CustomTokenObtainPairSerializer(serializers.Serializer):
+    def validate(self, attrs):
+        user = self.context['request'].user
+        refresh = RefreshToken.for_user(user)
+
+        data = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+
+        return data

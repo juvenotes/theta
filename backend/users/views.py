@@ -1,12 +1,12 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions, status, viewsets
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
-from .serializers import AdditionalInfoSerializer, UserSerializer
+from .serializers import AdditionalInfoSerializer, UserSerializer, CustomTokenObtainPairSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,22 +33,30 @@ class UserViewSet(viewsets.ModelViewSet):
         except KeyError:
             return super(UserViewSet, self).get_permissions()
 
-    @action(detail=False, methods=['post'], permission_classes=[AllowAny], serializer_class=AuthTokenSerializer)
+    @extend_schema(
+        summary="User Login",
+        description="This action allows a user to login",
+        responses={200: CustomTokenObtainPairSerializer(many=False)}
+    )
+    @action(detail=False, methods=['post'], permission_classes=[AllowAny], serializer_class=CustomTokenObtainPairSerializer)
     def login(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
+        refresh = RefreshToken.for_user(user)
         return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'email': user.email
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
         }, status=status.HTTP_200_OK)
 
+    @extend_schema(
+        summary="User Logout",
+        description="This action allows a user to logout",
+        responses={200: None}
+    )
     @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
     def logout(self, request):
-        request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response({"message": "Logout successful"}, status=status.HTTP_200_OK)
 
 
 class PersonalizationViewSet(viewsets.ModelViewSet):

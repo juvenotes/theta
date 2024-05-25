@@ -9,13 +9,18 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
+from mcq.api.routes import routes as mcq_routes
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 from users.routes import routes as users_routes
 
 
 router = DefaultRouter()
 
-routes = common_routes + users_routes
+routes = common_routes + users_routes + mcq_routes
 for route in routes:
     router.register(route["regex"], route["viewset"],
                     basename=route["basename"])
@@ -38,5 +43,6 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path('api/mcq/', include('mcq.api.urls')), 
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
