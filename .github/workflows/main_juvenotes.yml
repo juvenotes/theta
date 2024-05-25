@@ -65,6 +65,15 @@ jobs:
           echo "-----> Running collectstatic"
           echo "-----> Collecting static files"
           poetry run backend/manage.py collectstatic --noinput
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
+          MAILGUN_SENDER_DOMAIN: ${{ secrets.MAILGUN_SENDER_DOMAIN }}
+          MAILGUN_USERNAME: ${{ secrets.MAILGUN_USERNAME }}
+          MAILGUN_PASSWORD: ${{ secrets.MAILGUN_PASSWORD }}
 
       - name: Run migrations
         run: |
