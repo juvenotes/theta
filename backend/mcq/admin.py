@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django.db import transaction
 
+from unfold.admin import ModelAdmin
+
 from .aiken import load
 from .forms import QuizAdminForm
 from .models import Choice, Feedback, Question, Quiz, Unit
+
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
@@ -14,19 +17,19 @@ class FeedbackInline(admin.TabularInline):
     extra = 1
 
 @admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(ModelAdmin):
     inlines = [ChoiceInline, FeedbackInline]
     search_fields = ('text',)
 
 @admin.register(Unit)
-class UnitAdmin(admin.ModelAdmin):
+class UnitAdmin(ModelAdmin):
     search_fields = ('name',)
 
 @admin.register(Quiz)
-class QuizAdmin(admin.ModelAdmin):
+class QuizAdmin(ModelAdmin):
     form = QuizAdminForm
-    list_display = ('title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type')
-    fields = ('title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type', 'file')
+    list_display = ('owner','title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type')
+    fields = ('owner','title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type', 'file')
     search_fields = ('title',)
 
     def save_model(self, request, obj, form, change):
