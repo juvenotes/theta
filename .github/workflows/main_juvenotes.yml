@@ -50,6 +50,8 @@ jobs:
         run: |
           echo "-----> Running manage.py check --deploy --fail-level WARNING"
           poetry run backend/manage.py check --deploy --fail-level WARNING
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Collect static files
         run: |
