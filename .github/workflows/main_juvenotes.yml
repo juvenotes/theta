@@ -46,21 +46,21 @@ jobs:
           poetry install --without dev --no-root --no-interaction
           echo "-----> Poetry done"
 
-      # - name: Check Django settings
-      #   run: |
-      #     echo "-----> Running manage.py check --deploy --fail-level WARNING"
-      #     poetry run backend/manage.py check --deploy --fail-level WARNING
+      - name: Check Django settings
+        run: |
+          echo "-----> Running manage.py check --deploy --fail-level WARNING"
+          poetry run backend/manage.py check --deploy --fail-level WARNING
 
-      # - name: Collect static files
-      #   run: |
-      #     echo "-----> Running collectstatic"
-      #     echo "-----> Collecting static files"
-      #     poetry run backend/manage.py collectstatic --noinput
+      - name: Collect static files
+        run: |
+          echo "-----> Running collectstatic"
+          echo "-----> Collecting static files"
+          poetry run backend/manage.py collectstatic --noinput
 
-      # - name: Run migrations
-      #   run: |
-      #     echo "-----> Running manage.py migrate"
-      #     poetry run backend/manage.py migrate --noinput
+      - name: Run migrations
+        run: |
+          echo "-----> Running manage.py migrate"
+          poetry run backend/manage.py migrate --noinput
 
       # - name: Push source maps to Sentry
       #   run: |
