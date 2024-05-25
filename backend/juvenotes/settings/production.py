@@ -21,10 +21,18 @@ MEDIA_ROOT = base_dir_join("mediafiles")
 MEDIA_URL = "/media/"
 
 SERVER_EMAIL = "noreply@juvenotes.com"
+DEFAULT_FROM_EMAIL = "noreply@juvenotes.com" 
 
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_HOST_USER = config("SENDGRID_USERNAME")
-EMAIL_HOST_PASSWORD = config("SENDGRID_PASSWORD")
+ANYMAIL = {
+    "MAILGUN_API_KEY": config("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": config("MAILGUN_SENDER_DOMAIN"),  
+}
+
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend" # or sendgrid.EmailBackend
+
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_HOST_USER = config("MAILGUN_USERNAME")
+EMAIL_HOST_PASSWORD = config("MAILGUN_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -127,11 +135,6 @@ LOGGING = {
         "log_request_id.middleware": {
             "handlers": ["console"],
             "level": "DEBUG",
-            "propagate": False,
-        },
-        "django_guid": {
-            "handlers": ["console"],
-            "level": "WARNING",
             "propagate": False,
         },
     },
