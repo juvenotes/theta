@@ -1,3 +1,7 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
+
 name: Build and deploy Python app to Azure Web App - juvenotes
 
 on:
@@ -18,82 +22,15 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20' 
-
-      - name: Build frontend
-        run: |
-          echo "-----> Build frontend"
-          npm install
-          npm run build
-          echo "-----> Build frontend done"
-
-      - name: Set up Python environment
+      - name: Create and start virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
-          echo "DJANGO_SETTINGS_MODULE=juvenotes.settings.production" >> $GITHUB_ENV
-
-      - name: Install Poetry
-        run: |
-          echo "-----> Poetry install"
-          pip install poetry
-
-      - name: Install Python dependencies
-        run: |
-          poetry install --without dev --no-root --no-interaction
-          echo "-----> Poetry done"
-
-      # - name: Check Django settings
-      #   run: |
-      #     echo "-----> Running manage.py check --deploy --fail-level WARNING"
-      #     poetry run backend/manage.py check --deploy --fail-level WARNING
-      #   env:
-      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      #     REDIS_URL: ${{ secrets.REDIS_URL }}
-      #     SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      #     ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-      #     MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
-      #     MAILGUN_SENDER_DOMAIN: ${{ secrets.MAILGUN_SENDER_DOMAIN }}
-      #     MAILGUN_USERNAME: ${{ secrets.MAILGUN_USERNAME }}
-      #     MAILGUN_PASSWORD: ${{ secrets.MAILGUN_PASSWORD }}
-
-      - name: Collect static files
-        run: |
-          echo "-----> Running collectstatic"
-          echo "-----> Collecting static files"
-          poetry run backend/manage.py collectstatic --noinput
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-          MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
-          MAILGUN_SENDER_DOMAIN: ${{ secrets.MAILGUN_SENDER_DOMAIN }}
-          MAILGUN_USERNAME: ${{ secrets.MAILGUN_USERNAME }}
-          MAILGUN_PASSWORD: ${{ secrets.MAILGUN_PASSWORD }}
-
-      - name: Run migrations
-        run: |
-          echo "-----> Running manage.py migrate"
-          poetry run backend/manage.py migrate --noinput
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-          MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
-          MAILGUN_SENDER_DOMAIN: ${{ secrets.MAILGUN_SENDER_DOMAIN }}
-          MAILGUN_USERNAME: ${{ secrets.MAILGUN_USERNAME }}
-          MAILGUN_PASSWORD: ${{ secrets.MAILGUN_PASSWORD }}
-
-      # - name: Push source maps to Sentry
-      #   run: |
-      #     echo "-----> Pushing source maps to Sentry"
-      #     npx @sentry/cli --auth-token=$SENTRY_API_KEY releases --org=$SENTRY_ORG --project=$SENTRY_PROJECT_NAME files $RENDER_GIT_COMMIT upload-sourcemaps ./frontend/webpack_bundles/ --url-prefix "~/static/webpack_bundles/" --rewrite
-      #     rm ./frontend/webpack_bundles/*.js.map
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -112,9 +49,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -124,16 +59,11 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_521F8046E45A42D289014BB0210DD2A4 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5029A26678B34C5EA07682BB5A607D88 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4C6268EE18854592B44FEF6D4DCBD183 }}
-
+      
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'juvenotes'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9F317F8B075643478307999DC2F1617B }}
