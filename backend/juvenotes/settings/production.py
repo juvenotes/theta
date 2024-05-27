@@ -1,3 +1,5 @@
+import os
+
 import sentry_sdk
 from decouple import Csv, config
 from django_guid.integrations import SentryIntegration as DjangoGUIDSentryIntegration
@@ -6,14 +8,40 @@ from sentry_sdk.integrations.django import DjangoIntegration
 from .base import *
 
 
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
+CSRF_TRUSTED_ORIGINS = ['https://' + os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
+CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
 DEBUG = False
 
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = os.environ("SECRET_KEY")
 
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["default"]["OPTIONS"] = {'sslmode': 'require'}
+CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
+CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": CONNECTION_STR['dbname'],
+        "HOST": CONNECTION_STR['host'],
+        "USER": CONNECTION_STR['user'],
+        "PASSWORD": CONNECTION_STR['password'],
+        "ATOMIC_REQUESTS": True,
+        "OPTIONS": {'sslmode': 'require'},
+    }
+}
+
+CACHES = {
+        "default": {  
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get('AZURE_REDIS_CONNECTIONSTRING'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+        },
+    }
+}
+
+# ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 STATIC_ROOT = base_dir_join("staticfiles")
 STATIC_URL = "/static/"
@@ -25,15 +53,15 @@ SERVER_EMAIL = "noreply@juvenotes.com"
 DEFAULT_FROM_EMAIL = "noreply@juvenotes.com" 
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": config("MAILGUN_API_KEY"),
-    "MAILGUN_SENDER_DOMAIN": config("MAILGUN_SENDER_DOMAIN"),  
+    "MAILGUN_API_KEY": os.environ("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": os.environ("MAILGUN_SENDER_DOMAIN"),  
 }
 
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend" # or sendgrid.EmailBackend
 
 EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_HOST_USER = config("MAILGUN_USERNAME")
-EMAIL_HOST_PASSWORD = config("MAILGUN_PASSWORD")
+EMAIL_HOST_USER = os.environ("MAILGUN_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ("MAILGUN_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -43,7 +71,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=3600, cast=int)
+SECURE_HSTS_SECONDS = os.environ("SECURE_HSTS_SECONDS", default=3600, cast=int)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -55,12 +83,12 @@ WEBPACK_LOADER["DEFAULT"]["CACHE"] = True
 
 # Celery
 # Recommended settings for reliability: https://gist.github.com/fjsj/da41321ac96cf28a96235cb20e7236f6
-CELERY_BROKER_URL = config("RABBITMQ_URL", default="") or config("REDIS_URL")
-CELERY_RESULT_BACKEND = config("REDIS_URL")
+CELERY_BROKER_URL = os.environ("RABBITMQ_URL", default="") or os.environ("REDIS_URL")
+CELERY_RESULT_BACKEND = os.environ("REDIS_URL")
 CELERY_SEND_TASK_ERROR_EMAILS = True
 
 # Redbeat https://redbeat.readthedocs.io/en/latest/config.html#redbeat-redis-url
-redbeat_redis_url = config("REDBEAT_REDIS_URL", default="")
+redbeat_redis_url = os.environ("REDBEAT_REDIS_URL", default="")
 
 # Whitenoise
 STORAGES = {
