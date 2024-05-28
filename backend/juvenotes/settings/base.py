@@ -2,6 +2,7 @@ import os
 
 from decouple import config
 from dj_database_url import parse as db_url
+from socket import gethostname
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -21,8 +22,11 @@ AUTH_USER_MODEL = "users.User"
 
 ALLOWED_HOSTS = []
 
+# DATABASES = {
+#     "default": config("DATABASE_URL", cast=db_url),
+# }
 DATABASES = {
-    "default": config("DATABASE_URL", cast=db_url),
+    "default": os.environ("AZURE_POSTGRESQL_CONNECTIONSTRING") if 'WEBSITE_HOSTNAME' in os.environ else config("DATABASE_URL", cast=db_url),
 }
 
 INSTALLED_APPS = [
