@@ -4,6 +4,7 @@ import os
 import sys
 
 from decouple import config
+from dotenv import load_dotenv
 
 
 # if __name__ == "__main__":
@@ -33,8 +34,17 @@ from decouple import config
 
 def main():
     """Run administrative tasks."""
-    settings_module = 'juvenotes.settings.production' if 'WEBSITE_HOSTNAME' in os.environ else config("DJANGO_SETTINGS_MODULE", default=None)
+    # If WEBSITE_HOSTNAME is defined as an environment variable, then we're running on Azure App Service
+
+    # Only for Local Development - Load environment variables from the .env file
+    if 'WEBSITE_HOSTNAME' not in os.environ:
+        print("Loading environment variables for .env file")
+        load_dotenv('.env')
+
+    # When running on Azure App Service you should use the production settings.
+    settings_module = "juvenotes.settings.production" if 'WEBSITE_HOSTNAME' in os.environ else 'azureproject.settings.base'
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
