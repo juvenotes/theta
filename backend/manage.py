@@ -42,7 +42,7 @@ def main():
         load_dotenv('.env')
 
     # When running on Azure App Service you should use the production settings.
-    settings_module = "juvenotes.settings.production" if 'WEBSITE_HOSTNAME' in os.environ else 'azureproject.settings.base'
+    settings_module = 'juvenotes.settings.production' if os.environ.get('DJANGO_SETTINGS_MODULE') == 'juvenotes.settings.production' else 'juvenotes.settings.base'
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
     try:
