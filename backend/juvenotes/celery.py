@@ -9,7 +9,8 @@ from decouple import config
 from .celerybeat_schedule import CELERYBEAT_SCHEDULE
 
 
-settings_module = 'juvenotes.settings.production' if 'WEBSITE_HOSTNAME' in os.environ else config("DJANGO_SETTINGS_MODULE", default=None)
+# Only for Local Development - Load environment variables from the .env file
+settings_module = 'juvenotes.settings.production' if os.environ.get('DJANGO_SETTINGS_MODULE') == 'juvenotes.settings.production' else 'juvenotes.settings.base'
 if settings_module is None:
     print(
         "Error: no DJANGO_SETTINGS_MODULE found. Will NOT start devserver. "
