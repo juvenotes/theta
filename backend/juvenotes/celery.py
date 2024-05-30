@@ -9,8 +9,7 @@ from decouple import config
 from .celerybeat_schedule import CELERYBEAT_SCHEDULE
 
 
-# Only for Local Development - Load environment variables from the .env file
-settings_module = 'juvenotes.settings.production' if os.environ.get('DJANGO_SETTINGS_MODULE') == 'juvenotes.settings.production' else 'juvenotes.settings.base'
+settings_module = config("DJANGO_SETTINGS_MODULE", default=None)
 if settings_module is None:
     print(
         "Error: no DJANGO_SETTINGS_MODULE found. Will NOT start devserver. "
