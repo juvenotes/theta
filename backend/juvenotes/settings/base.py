@@ -21,9 +21,10 @@ AUTH_USER_MODEL = "users.User"
 
 ALLOWED_HOSTS = []
 
-DATABASES = {
-    "default": config("DATABASE_URL", cast=db_url),
-}
+if os.getenv('DJANGO_SETTINGS_MODULE') != 'juvenotes.settings.production':
+    DATABASES = {
+        "default": config("DATABASE_URL", cast=db_url),
+    }
 
 INSTALLED_APPS = [
     "unfold",
