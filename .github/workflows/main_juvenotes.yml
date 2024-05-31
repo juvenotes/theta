@@ -24,37 +24,24 @@ jobs:
 
       - name: Create and start virtual environment
         run: |
-          cd backend
           python -m venv venv
           source venv/bin/activate
       
       - name: Install dependencies
-        run: |
-          cd backend
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      
-      - name: Collect static files
-        run: |
-          cd backend 
-          python manage.py collectstatic --noinput 2>&1 | sed '/^Copying/d;/^$/d;/^ /d'
-
+        run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: |
-          cd backend 
-          zip release.zip ./* -r
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
-            backend/release.zip
+            release.zip
             !venv/
-
 
   deploy:
     runs-on: ubuntu-latest
@@ -79,4 +66,4 @@ jobs:
         with:
           app-name: 'juvenotes'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9F317F8B075643478307999DC2F1617B }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A6505BDBB8844E5E889FD12462E50AA2 }}
