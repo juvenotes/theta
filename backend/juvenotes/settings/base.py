@@ -257,4 +257,7 @@ CSP_IMG_SRC = [
 DEFENDER_LOGIN_FAILURE_LIMIT = 3
 DEFENDER_COOLOFF_TIME = 300  # 5 minutes
 DEFENDER_LOCKOUT_TEMPLATE = "defender/lockout.html"
-DEFENDER_REDIS_URL = config("REDIS_URL")
+if os.getenv('DJANGO_SETTINGS_MODULE') != 'juvenotes.settings.production':
+    DEFENDER_REDIS_URL = config("AZURE_REDIS_CONNECTIONSTRING")
+else:
+    DEFENDER_REDIS_URL = config("REDIS_URL")
