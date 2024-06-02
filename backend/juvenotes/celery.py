@@ -9,7 +9,7 @@ from decouple import config
 from .celerybeat_schedule import CELERYBEAT_SCHEDULE
 
 
-settings_module = 'juvenotes.settings.production' if 'WEBSITE_HOSTNAME' in os.environ else config("DJANGO_SETTINGS_MODULE")
+settings_module = 'juvenotes.settings.production' if os.getenv('DJANGO_SETTINGS_MODULE') == 'juvenotes.settings.production' else config("DJANGO_SETTINGS_MODULE")
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 if settings_module is None:
     print(
