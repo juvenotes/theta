@@ -13,7 +13,7 @@ CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_
 CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
 DEBUG = False
 
-SECRET_KEY = os.environ("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
 CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
