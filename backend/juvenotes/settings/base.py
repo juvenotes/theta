@@ -21,10 +21,10 @@ AUTH_USER_MODEL = "users.User"
 
 ALLOWED_HOSTS = []
 
-if os.getenv('DJANGO_SETTINGS_MODULE') != 'juvenotes.settings.production':
-    DATABASES = {
-        "default": config("DATABASE_URL", cast=db_url),
-    }
+# if os.getenv('DJANGO_SETTINGS_MODULE') != 'juvenotes.settings.production':
+#     DATABASES = {
+#         "default": config("DATABASE_URL", cast=db_url),
+#     }
 
 INSTALLED_APPS = [
     "unfold",
@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "debreach.middleware.RandomCommentMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django_permissions_policy.PermissionsPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
