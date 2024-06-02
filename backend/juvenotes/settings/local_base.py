@@ -13,6 +13,10 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = base_dir_join("mediafiles")
 MEDIA_URL = "/media/"
 
+DATABASES = {
+        "default": config("DATABASE_URL", cast=db_url),
+}
+
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
