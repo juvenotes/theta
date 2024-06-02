@@ -11,7 +11,7 @@ from .base import *
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
 # CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
 # CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
-CSRF_TRUSTED_ORIGINS = ['juvenotes.azurewebsites.net', '.juvenotes.com']
+CSRF_TRUSTED_ORIGINS = ['https://juvenotes.azurewebsites.net', 'https://*.juvenotes.com']
 DEBUG = False
 
 SECRET_KEY = os.environ.get("SECRET_KEY")

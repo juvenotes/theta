@@ -15,7 +15,7 @@ if __name__ == "__main__":
                 "Ignoring config('DJANGO_SETTINGS_MODULE') because it's test. "
                 "Using 'juvenotes.settings.test'"
             )
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "juvenotes.settings.test")
+        os.environ["DJANGO_SETTINGS_MODULE"] = "juvenotes.settings.test"
     else:
         if settings_module is None:
             print(
@@ -24,7 +24,7 @@ if __name__ == "__main__":
                 "Check README for more info."
             )
             sys.exit(1)
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+        os.environ["DJANGO_SETTINGS_MODULE"] = settings_module
 
     from django.core.management import execute_from_command_line
 
