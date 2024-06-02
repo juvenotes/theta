@@ -44,7 +44,9 @@ CACHES = {
 
 # ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
-# STATICFILES_DIRS = (base_dir_join("../frontend"),)
+# to configure static files handling better
+
+STATICFILES_DIRS = base_dir_join("static")
 
 STATIC_ROOT = base_dir_join("staticfiles")
 STATIC_URL = "/static/"

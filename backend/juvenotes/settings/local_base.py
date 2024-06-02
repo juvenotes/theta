@@ -7,6 +7,8 @@ HOST = "http://localhost:8000"
 
 SECRET_KEY = "secret"  # noqa: S105
 
+STATICFILES_DIRS = (base_dir_join("../frontend"),)
+
 STATIC_ROOT = base_dir_join("staticfiles")
 STATIC_URL = "/static/"
 
