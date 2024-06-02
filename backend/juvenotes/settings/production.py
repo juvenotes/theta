@@ -53,15 +53,15 @@ SERVER_EMAIL = "noreply@juvenotes.com"
 DEFAULT_FROM_EMAIL = "noreply@juvenotes.com" 
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": os.environ("MAILGUN_API_KEY"),
-    "MAILGUN_SENDER_DOMAIN": os.environ("MAILGUN_SENDER_DOMAIN"),  
+    "MAILGUN_API_KEY": os.environ.get("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": os.environ.get("MAILGUN_SENDER_DOMAIN"),  
 }
 
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend" # or sendgrid.EmailBackend
 
 EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_HOST_USER = os.environ("MAILGUN_USERNAME")
-EMAIL_HOST_PASSWORD = os.environ("MAILGUN_PASSWORD")
+EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -83,12 +83,12 @@ WEBPACK_LOADER["DEFAULT"]["CACHE"] = True
 
 # Celery
 # Recommended settings for reliability: https://gist.github.com/fjsj/da41321ac96cf28a96235cb20e7236f6
-CELERY_BROKER_URL = os.environ("RABBITMQ_URL", default="") or os.environ("REDIS_URL")
-CELERY_RESULT_BACKEND = os.environ("REDIS_URL")
+CELERY_BROKER_URL = os.environ.get("RABBITMQ_URL", default="") or os.environ.get("REDIS_URL")
+CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL")
 CELERY_SEND_TASK_ERROR_EMAILS = True
 
 # Redbeat https://redbeat.readthedocs.io/en/latest/config.html#redbeat-redis-url
-redbeat_redis_url = os.environ("REDBEAT_REDIS_URL", default="")
+redbeat_redis_url = os.environ.get("REDBEAT_REDIS_URL", default="")
 
 # Whitenoise
 STORAGES = {
