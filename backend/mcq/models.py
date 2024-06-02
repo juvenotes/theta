@@ -21,7 +21,11 @@ class Unit(IndexedTimeStampedModel):
 
 # quiz model
 class Quiz(IndexedTimeStampedModel):
-    YEAR_CHOICES = [(r,r) for r in range(2000, (datetime.datetime.now().year+1))]
+    # def year_choices(model_name):
+    #     current_year = datetime.datetime.now().year
+    #     return [(f"{year}_{model_name}", year) for year in range(2000, current_year + 1)]
+
+    # YEARS_CHOICES = year_choices('Quiz')
 
     owner = models.ForeignKey(User,
                               related_name='quizzes_created',
@@ -31,9 +35,9 @@ class Quiz(IndexedTimeStampedModel):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     # New fields, for year and tags when we bundle quizzes and create a unified qbank for a unit if someone wants it
-    year_tested = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
-    paper_type = models.CharField(max_length=255, choices=[('EOR', 'End of Rotation'), ('EOY', 'End of Year')], default='EOR')
-    related_topic = models.ForeignKey(Unit, related_name='related_qustions', on_delete=models.SET_NULL, null=True, blank=True)
+    year = models.IntegerField(('year'), blank=False, default=2024)
+    paper_type = models.CharField(max_length=255, choices=[('EOR', 'End of Rotation'), ('EOY', 'End of Year')], blank=False, default='EOR')
+    related_topic = models.ForeignKey(Unit, related_name='related_questions', on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         unique_together = ('title', 'id')

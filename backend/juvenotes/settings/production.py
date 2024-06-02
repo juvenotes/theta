@@ -9,8 +9,9 @@ from .base import *
 
 
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
-CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
-CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
+# CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
+# CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
+CSRF_TRUSTED_ORIGINS = ['https://juvenotes.azurewebsites.net', 'https://*.juvenotes.com']
 DEBUG = False
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -42,6 +43,8 @@ CACHES = {
 }
 
 # ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+
+# STATICFILES_DIRS = (base_dir_join("../frontend"),)
 
 STATIC_ROOT = base_dir_join("staticfiles")
 STATIC_URL = "/static/"
@@ -174,3 +177,9 @@ JS_REVERSE_EXCLUDE_NAMESPACES = ["admin"]
 
 # Sentry
 sentry_sdk.init(dsn=SENTRY_DSN, integrations=[DjangoIntegration()], release=COMMIT_SHA)
+
+# Django-defender
+DEFENDER_LOGIN_FAILURE_LIMIT = 3
+DEFENDER_COOLOFF_TIME = 300  # 5 minutes
+DEFENDER_LOCKOUT_TEMPLATE = "defender/lockout.html"
+DEFENDER_REDIS_URL = os.environ.get("AZURE_REDIS_CONNECTIONSTRING")

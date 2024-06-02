@@ -28,8 +28,8 @@ class UnitAdmin(ModelAdmin):
 @admin.register(Quiz)
 class QuizAdmin(ModelAdmin):
     form = QuizAdminForm
-    list_display = ('owner','title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type')
-    fields = ('owner','title', 'description', 'unit', 'year_tested', 'related_topic', 'paper_type', 'file')
+    list_display = ('owner','title', 'description', 'unit', 'year', 'related_topic', 'paper_type')
+    fields = ('owner','title', 'description', 'unit', 'year', 'related_topic', 'paper_type', 'file')
     search_fields = ('title',)
 
     def save_model(self, request, obj, form, change):

@@ -21,10 +21,10 @@ AUTH_USER_MODEL = "users.User"
 
 ALLOWED_HOSTS = []
 
-if os.getenv('DJANGO_SETTINGS_MODULE') != 'juvenotes.settings.production':
-    DATABASES = {
-        "default": config("DATABASE_URL", cast=db_url),
-    }
+# if os.getenv('DJANGO_SETTINGS_MODULE') != 'juvenotes.settings.production':
+#     DATABASES = {
+#         "default": config("DATABASE_URL", cast=db_url),
+#     }
 
 INSTALLED_APPS = [
     "unfold",
@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "debreach.middleware.RandomCommentMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django_permissions_policy.PermissionsPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -257,7 +256,4 @@ CSP_IMG_SRC = [
 DEFENDER_LOGIN_FAILURE_LIMIT = 3
 DEFENDER_COOLOFF_TIME = 300  # 5 minutes
 DEFENDER_LOCKOUT_TEMPLATE = "defender/lockout.html"
-# if 'HOSTNAME' in os.environ:
-    # DEFENDER_REDIS_URL = config("AZURE_REDIS_CONNECTIONSTRING")
-# else:
-#     DEFENDER_REDIS_URL = config("REDIS_URL")
+DEFENDER_REDIS_URL = config("REDIS_URL") 
