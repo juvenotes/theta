@@ -8,7 +8,7 @@ class QuizSerializer(serializers.ModelSerializer):
     file = serializers.FileField(required=False)
     class Meta:
         model = Quiz
-        fields = ['id', 'unit', 'title', 'description', 'file', 'year_tested', 'paper_type', 'related_topic']
+        fields = ['id', 'unit', 'title', 'description', 'file', 'year', 'paper_type', 'related_topic']
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:

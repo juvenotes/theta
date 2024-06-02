@@ -54,8 +54,11 @@ class User(AbstractBaseUser, PermissionsMixin, IndexedTimeStampedModel):
         ('MSU', 'Maseno University'),
     ]
 
-    CURRENT_YEAR = datetime.now().year
-    GRADUATION_YEAR_CHOICES = [(r,r) for r in range(2000, CURRENT_YEAR+1)] # noqa: RUF012
+    # def year_choices(model_name):
+    #     current_year = datetime.datetime.now().year
+    #     return [(f"{year}_{model_name}", year) for year in range(2000, current_year + 1)]
+
+    # GRADUATION_YEAR_CHOICES = year_choices('User')
 
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=255, unique=True, blank=True, null=True)
@@ -72,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin, IndexedTimeStampedModel):
     role = models.CharField(max_length=2, choices=ROLE_CHOICES, blank=True)
     student_profession = models.CharField(max_length=2, choices=STUDENT_CHOICES+PROFESSIONAL_CHOICES, blank=False, default='MS')
     institution = models.CharField(max_length=5, choices=INSTITUTION_CHOICES, blank=False, default='UON')
-    graduation_year = models.IntegerField(choices=GRADUATION_YEAR_CHOICES, blank=False, default=2024)
+    graduation_year = models.IntegerField(blank=False, default=2024)
 
     objects = UserManager()
 

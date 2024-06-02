@@ -770,10 +770,9 @@ components:
           - $ref: '#/components/schemas/RoleEnum'
           - $ref: '#/components/schemas/BlankEnum'
         graduation_year:
-          allOf:
-          - $ref: '#/components/schemas/GraduationYearEnum'
-          minimum: -2147483648
+          type: integer
           maximum: 2147483647
+          minimum: -2147483648
         student_profession:
           $ref: '#/components/schemas/StudentProfessionEnum'
         institution:
@@ -811,60 +810,6 @@ components:
       - id
       - question
       - text
-    GraduationYearEnum:
-      enum:
-      - 2000
-      - 2001
-      - 2002
-      - 2003
-      - 2004
-      - 2005
-      - 2006
-      - 2007
-      - 2008
-      - 2009
-      - 2010
-      - 2011
-      - 2012
-      - 2013
-      - 2014
-      - 2015
-      - 2016
-      - 2017
-      - 2018
-      - 2019
-      - 2020
-      - 2021
-      - 2022
-      - 2023
-      - 2024
-      type: integer
-      description: |-
-        * `2000` - 2000
-        * `2001` - 2001
-        * `2002` - 2002
-        * `2003` - 2003
-        * `2004` - 2004
-        * `2005` - 2005
-        * `2006` - 2006
-        * `2007` - 2007
-        * `2008` - 2008
-        * `2009` - 2009
-        * `2010` - 2010
-        * `2011` - 2011
-        * `2012` - 2012
-        * `2013` - 2013
-        * `2014` - 2014
-        * `2015` - 2015
-        * `2016` - 2016
-        * `2017` - 2017
-        * `2018` - 2018
-        * `2019` - 2019
-        * `2020` - 2020
-        * `2021` - 2021
-        * `2022` - 2022
-        * `2023` - 2023
-        * `2024` - 2024
     InstitutionEnum:
       enum:
       - UON
@@ -993,10 +938,9 @@ components:
           - $ref: '#/components/schemas/RoleEnum'
           - $ref: '#/components/schemas/BlankEnum'
         graduation_year:
-          allOf:
-          - $ref: '#/components/schemas/GraduationYearEnum'
-          minimum: -2147483648
+          type: integer
           maximum: 2147483647
+          minimum: -2147483648
         student_profession:
           $ref: '#/components/schemas/StudentProfessionEnum'
         institution:
@@ -1035,12 +979,10 @@ components:
         file:
           type: string
           format: uri
-        year_tested:
-          allOf:
-          - $ref: '#/components/schemas/YearTestedEnum'
-          title: Year
-          minimum: -2147483648
+        year:
+          type: integer
           maximum: 2147483647
+          minimum: -2147483648
         paper_type:
           $ref: '#/components/schemas/PaperTypeEnum'
         related_topic:
@@ -1131,12 +1073,10 @@ components:
         file:
           type: string
           format: uri
-        year_tested:
-          allOf:
-          - $ref: '#/components/schemas/YearTestedEnum'
-          title: Year
-          minimum: -2147483648
+        year:
+          type: integer
           maximum: 2147483647
+          minimum: -2147483648
         paper_type:
           $ref: '#/components/schemas/PaperTypeEnum'
         related_topic:
@@ -1262,60 +1202,6 @@ components:
       - last_login
       - modified
       - password
-    YearTestedEnum:
-      enum:
-      - 2000
-      - 2001
-      - 2002
-      - 2003
-      - 2004
-      - 2005
-      - 2006
-      - 2007
-      - 2008
-      - 2009
-      - 2010
-      - 2011
-      - 2012
-      - 2013
-      - 2014
-      - 2015
-      - 2016
-      - 2017
-      - 2018
-      - 2019
-      - 2020
-      - 2021
-      - 2022
-      - 2023
-      - 2024
-      type: integer
-      description: |-
-        * `2000` - 2000
-        * `2001` - 2001
-        * `2002` - 2002
-        * `2003` - 2003
-        * `2004` - 2004
-        * `2005` - 2005
-        * `2006` - 2006
-        * `2007` - 2007
-        * `2008` - 2008
-        * `2009` - 2009
-        * `2010` - 2010
-        * `2011` - 2011
-        * `2012` - 2012
-        * `2013` - 2013
-        * `2014` - 2014
-        * `2015` - 2015
-        * `2016` - 2016
-        * `2017` - 2017
-        * `2018` - 2018
-        * `2019` - 2019
-        * `2020` - 2020
-        * `2021` - 2021
-        * `2022` - 2022
-        * `2023` - 2023
-        * `2024` - 2024
   securitySchemes:
     cookieAuth:
       type: apiKey
