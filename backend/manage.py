@@ -7,7 +7,9 @@ from decouple import config
 
 
 if __name__ == "__main__":
-    settings_module = 'juvenotes.settings.production' if 'HOSTNAME' in os.environ else config("DJANGO_SETTINGS_MODULE", default=None)
+    settings_module = 'juvenotes.settings.production' if 'WEBSITE_HOSTNAME' in os.environ else config("DJANGO_SETTINGS_MODULE")
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+    print(settings_module)
 
     if sys.argv[1] == "test":
         if settings_module:

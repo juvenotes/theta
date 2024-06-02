@@ -37,6 +37,8 @@ services:
     volumes:
       - ./:/home/user/app/
     env_file: backend/.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=juvenotes.settings.local
     depends_on:
       - db
       - broker
