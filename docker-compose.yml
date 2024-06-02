@@ -47,7 +47,7 @@ services:
     build:
       dockerfile: backend/Dockerfile
       context: .
-    command: celery --app=myproject worker --loglevel=info
+    command: celery --app=juvenotes worker --loglevel=info
     volumes:
       - ./:/home/user/app/
     env_file: backend/.env
