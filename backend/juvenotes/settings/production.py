@@ -51,7 +51,7 @@ CACHES = {
 STATIC_ROOT = base_dir_join("staticfiles")
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = base_dir_join('frontend', 'webpack_bundles')
+STATICFILES_DIRS = (base_dir_join('frontend', 'webpack_bundles'),)
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
