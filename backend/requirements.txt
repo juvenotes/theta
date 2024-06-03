@@ -25,3 +25,4 @@ gunicorn==22.0.0
 django-unfold==0.24.0
 django-anymail[mailgun]==10.3
 djangorestframework-simplejwt[crypto]==5.3.1
+django-redis==5.4.0
