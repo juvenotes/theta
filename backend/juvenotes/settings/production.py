@@ -46,10 +46,14 @@ CACHES = {
 
 # to configure static files handling better
 
-STATICFILES_DIRS = (base_dir_join("static"),)
+# STATICFILES_DIRS = (base_dir_join("static"),)
 
 STATIC_ROOT = base_dir_join("staticfiles")
 STATIC_URL = "/static/"
+
+STATICFILES_DIRS = base_dir_join('frontend', 'webpack_bundles')
+
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_ROOT = base_dir_join("mediafiles")
 MEDIA_URL = "/media/"
@@ -85,7 +89,15 @@ SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 
 # Webpack
-WEBPACK_LOADER["DEFAULT"]["CACHE"] = True
+# WEBPACK_LOADER["DEFAULT"]["CACHE"] = True
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": True,
+        "STATS_FILE": base_dir_join("../frontend/webpack_bundles/webpack-stats.json"),
+        "POLL_INTERVAL": 0.1,
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
+    }
+}
 
 # Celery
 # Recommended settings for reliability: https://gist.github.com/fjsj/da41321ac96cf28a96235cb20e7236f6
