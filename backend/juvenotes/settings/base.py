@@ -1,5 +1,8 @@
 import os
 
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
 from decouple import config
 from dj_database_url import parse as db_url
 
@@ -121,6 +124,36 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+######################################################################
+# Unfold
+######################################################################
+UNFOLD = {
+    "SITE_HEADER": _("Juvenotes Admin Site - Manage Resources"),
+    "SITE_TITLE": _("Juvenotes Admin Site"),
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": _("Navigation"),
+                "separator": False,
+                "items": [
+                    {
+                        "title": _("Users"),
+                        "icon": "person",
+                        "link": reverse_lazy("admin:backend_user_changelist"),
+                    },
+                    {
+                        "title": _("Groups"),
+                        "icon": "label",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
 }
 
 # drf-spectacular

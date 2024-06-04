@@ -20,18 +20,37 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '20.13'
 
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
           python-version: '3.12'
 
-      - name: Create and start virtual environment
-        run: |
-          cd backend
-          python -m venv venv
-          source venv/bin/activate
+      - name: Cache node modules
+        uses: actions/cache@v4
+        env:
+          cache-name: node-modules-cache
+        with:
+          path: ~/.npm
+          # key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
+          restore-keys: |
+            build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
+            build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}
+            build-${{ env.cache-name }}
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        env:
+          cache-name: pip-cache
+        with:
+          path: ~/.cache/pip
+          key: build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
+          restore-keys: |
+            build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
+            build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}
+            build-${{ env.cache-name }}
       
       - name: Install dependencies
         run: |
@@ -48,15 +67,13 @@ jobs:
       
       - name: Collect static files
         run: |
-          cd backend 
-          python manage.py collectstatic --noinput 2>&1 | sed '/^Copying/d;/^$/d;/^ /d'
+          python backend/manage.py collectstatic --noinput 2>&1 | sed '/^Copying/d;/^$/d;/^ /d'
 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
         run: |
-          cd backend 
           zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
@@ -64,7 +81,7 @@ jobs:
         with:
           name: python-app
           path: |
-            backend/release.zip
+            release.zip
             !venv/
 
 

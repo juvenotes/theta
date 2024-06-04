@@ -8,8 +8,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 from .base import *
 
 
-ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
-ALLOWED_HOSTS += ['CUSTOM_HOSTNAME']
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME'],os.environ['CUSTOM_HOSTNAME']], ['.juvenotes.com']
 # CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
 # CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
 CSRF_TRUSTED_ORIGINS = ['https://juvenotes.azurewebsites.net', 'https://*.juvenotes.com']
