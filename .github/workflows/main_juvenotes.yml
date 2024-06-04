@@ -22,11 +22,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: |
-          npm install
-          npm run build
-
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
@@ -45,6 +40,11 @@ jobs:
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
           sudo apt-get install git-lfs --upgrade
           poetry install --with dev --no-root --no-interaction --no-ansi
+
+      - name: Install dependencies and build static files with webpack
+        run: |
+          npm install
+          npm run build
       
       - name: Collect static files
         run: |

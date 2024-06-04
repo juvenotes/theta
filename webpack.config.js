@@ -95,8 +95,8 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({ filename: "[name]-[chunkhash].css" }),
       isDev && new ReactRefreshWebpackPlugin(),
       new BundleTracker({
-        path: path.resolve(__dirname, 'staticfiles'),
-        filename: 'webpack-stats.json',
+        path: __dirname,
+        filename: "webpack-stats.json",
       }),
     ].filter(Boolean),
     resolve: {

@@ -9,7 +9,7 @@ from .base import *
 
 
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
-ALLOWED_HOSTS += ['https://*.juvenotes.com']
+ALLOWED_HOSTS += ['CUSTOM_HOSTNAME']
 # CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
 # CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
 CSRF_TRUSTED_ORIGINS = ['https://juvenotes.azurewebsites.net', 'https://*.juvenotes.com']
