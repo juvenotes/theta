@@ -9,6 +9,7 @@ from .base import *
 
 
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
+ALLOWED_HOSTS += ['https://*.juvenotes.com']
 # CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
 # CSRF_TRUSTED_ORIGINS += ['.juvenotes.com']
 CSRF_TRUSTED_ORIGINS = ['https://juvenotes.azurewebsites.net', 'https://*.juvenotes.com']
@@ -93,7 +94,7 @@ X_FRAME_OPTIONS = "DENY"
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": True,
-        "STATS_FILE": base_dir_join("../frontend/webpack_bundles/webpack-stats.json"),
+        "STATS_FILE": base_dir_join("../staticfiles/webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     }

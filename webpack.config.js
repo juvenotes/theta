@@ -12,8 +12,8 @@ module.exports = (env, argv) => {
     filename: "[name].js",
   };
   const productionOutput = {
-    path: path.resolve("./frontend/webpack_bundles/"),
-    publicPath: "auto",
+    path: path.resolve("./staticfiles/"),
+    publicPath: "/staticfiles/",
     filename: "[name]-[chunkhash].js",
   };
 
@@ -92,11 +92,11 @@ module.exports = (env, argv) => {
     },
     plugins: [
       !isDev &&
-        new MiniCssExtractPlugin({ filename: "[name]-[chunkhash].css" }),
+      new MiniCssExtractPlugin({ filename: "[name]-[chunkhash].css" }),
       isDev && new ReactRefreshWebpackPlugin(),
       new BundleTracker({
-        path: __dirname,
-        filename: "webpack-stats.json",
+        path: path.resolve(__dirname, 'staticfiles'),
+        filename: 'webpack-stats.json',
       }),
     ].filter(Boolean),
     resolve: {
