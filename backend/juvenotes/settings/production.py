@@ -94,7 +94,7 @@ X_FRAME_OPTIONS = "DENY"
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": True,
-        "STATS_FILE": base_dir_join("../staticfiles/webpack-stats.json"),
+        "STATS_FILE": base_dir_join("staticfiles/webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     }
