@@ -33,7 +33,6 @@ jobs:
           cache-name: node-modules-cache
         with:
           path: ~/.npm
-          # key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           key: build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
           restore-keys: |
             build-${{ env.cache-name }}-${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
@@ -67,13 +66,15 @@ jobs:
       
       - name: Collect static files
         run: |
-          python backend/manage.py collectstatic --noinput 2>&1 | sed '/^Copying/d;/^$/d;/^ /d'
+          cd backend 
+          python manage.py collectstatic --noinput 2>&1 | sed '/^Copying/d;/^$/d;/^ /d'
 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
         run: |
+          cd backend 
           zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
@@ -81,7 +82,7 @@ jobs:
         with:
           name: python-app
           path: |
-            release.zip
+            backend/release.zip
             !venv/
 
 
