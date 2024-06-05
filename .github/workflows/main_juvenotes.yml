@@ -101,13 +101,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      - name: Set startup command
-        uses: azure/appservice-settings@v1
-        with:
-          app-name: 'juvenotes'
-          slot-name: 'Production'
-          app-settings-json: '[{"name": "WEBSITES_STARTUP_FILE", "value": "gunicorn juvenotes.wsgi"}]'
-
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
