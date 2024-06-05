@@ -58,6 +58,7 @@ jobs:
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
           sudo apt-get install git-lfs --upgrade
           poetry install --with dev --no-root --no-interaction --no-ansi
+          poetry add python-decouple
 
       - name: Install dependencies and build static files with webpack
         run: |
