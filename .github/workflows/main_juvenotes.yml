@@ -69,6 +69,7 @@ jobs:
         run: |
           cd backend 
           python manage.py collectstatic --noinput 2>&1 | sed '/^Copying/d;/^$/d;/^ /d'
+          poetry run manage.py collectstatic --noinput
 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
