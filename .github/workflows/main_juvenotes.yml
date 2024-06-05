@@ -67,8 +67,7 @@ jobs:
       
       - name: Collect static files
         run: |
-          cd backend
-          poetry add python-decouple
+          cd backend 
           python manage.py collectstatic --noinput 2>&1 | sed '/^Copying/d;/^$/d;/^ /d'
 
         
