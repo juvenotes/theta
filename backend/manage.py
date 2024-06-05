@@ -9,7 +9,7 @@ from decouple import config
 if __name__ == "__main__":
     settings_module = 'juvenotes.settings.production' if os.getenv('DJANGO_SETTINGS_MODULE') == 'juvenotes.settings.production' else config("DJANGO_SETTINGS_MODULE")
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
-    print(settings_module)
+    # print(settings_module)
 
     if sys.argv[1] == "test":
         if settings_module:

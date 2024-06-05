@@ -18,12 +18,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '20.13'
 
       - name: Set up Python version
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
@@ -101,7 +101,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
+      - name: Set startup command
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'juvenotes'
+          slot-name: 'Production'
+          app-settings-json: '[{"name": "WEBSITES_STARTUP_FILE", "value": "gunicorn juvenotes.wsgi"}]'
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
