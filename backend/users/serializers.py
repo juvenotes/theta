@@ -1,10 +1,15 @@
 from django.contrib.auth.hashers import make_password
+
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from .models import User
 
+
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
 
     class Meta:
         model = User
@@ -21,7 +26,6 @@ class UserSerializer(serializers.ModelSerializer):
             "last_login",
         ]
         read_only_fields = ["id", "is_active", "is_staff", "is_superuser", "created", "modified", "last_login"]
-        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -46,3 +50,14 @@ class CustomTokenObtainPairSerializer(serializers.Serializer):
         }
 
         return data
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['name'] = user.username
+        # ...
+
+        return token
