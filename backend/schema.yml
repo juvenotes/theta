@@ -4,7 +4,61 @@ info:
   version: 0.1.0
   description: Endpoints to manage our application
 paths:
-  /api/quizzes/:
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /quizzes/:
     get:
       operationId: quizzes_list
       parameters:
@@ -58,7 +112,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Quiz'
           description: ''
-  /api/quizzes/{id}/:
+  /quizzes/{id}/:
     get:
       operationId: quizzes_retrieve
       parameters:
@@ -162,7 +216,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/quizzes/{quiz_pk}/questions/{id}/:
+  /quizzes/{quiz_pk}/questions/{id}/:
     get:
       operationId: quizzes_questions_list
       parameters:
@@ -234,7 +288,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Question'
           description: ''
-  /api/quizzes/{quiz_pk}/questions/{id}/{id}/:
+  /quizzes/{quiz_pk}/questions/{id}/{id}/:
     get:
       operationId: quizzes_questions_retrieve
       parameters:
@@ -348,7 +402,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/rest/rest-check/:
+  /rest/rest-check/:
     get:
       operationId: rest_rest_check_retrieve
       description: This endpoint checks if the REST API is working.
@@ -362,61 +416,7 @@ paths:
       responses:
         '200':
           description: Successful Response
-  /api/token/:
-    post:
-      operationId: token_create
-      description: |-
-        Takes a set of user credentials and returns an access and refresh JSON web
-        token pair to prove the authentication of those credentials.
-      tags:
-      - token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenObtainPair'
-          description: ''
-  /api/token/refresh/:
-    post:
-      operationId: token_refresh_create
-      description: |-
-        Takes a refresh type JSON web token and returns an access type JSON web
-        token if the refresh token is valid.
-      tags:
-      - token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenRefresh'
-          description: ''
-  /api/users/:
+  /users/:
     get:
       operationId: users_list
       parameters:
@@ -471,7 +471,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
-  /api/users/{id}/:
+  /users/{id}/:
     get:
       operationId: users_retrieve
       parameters:
@@ -575,7 +575,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/users/login/:
+  /users/login/:
     post:
       operationId: users_login_create
       description: This action allows a user to login
@@ -589,7 +589,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/users/logout/:
+  /users/logout/:
     post:
       operationId: users_logout_create
       description: This action allows a user to logout
@@ -614,7 +614,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /api/users/personalization/:
+  /users/personalization/:
     get:
       operationId: users_personalization_list
       parameters:
@@ -667,7 +667,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AdditionalInfo'
           description: ''
-  /api/users/personalization/{id}/:
+  /users/personalization/{id}/:
     get:
       operationId: users_personalization_retrieve
       parameters:
