@@ -35,6 +35,9 @@ django-anymail = {extras = ["mailgun"], version = "^10.3"}
 djangorestframework-simplejwt = {extras = ["crypto"], version = "^5.3.1"}
 psycopg = "^3.1.19"
 django-redis = "^5.4.0"
+django-storages = {extras = ["azure"], version = "^1.14.3"}
+dj-rest-auth = "^6.0.0"
+django-tree-queries = "^0.19.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.7"
