@@ -111,7 +111,7 @@ redbeat_redis_url = os.environ.get("REDBEAT_REDIS_URL", default="")
 # Whitenoise
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",

@@ -48,9 +48,12 @@ INSTALLED_APPS = [
     "defender",
     "django_guid",
     "anymail",
+    'rest_framework_simplejwt.token_blacklist', 
     "common",
     "users",
     "mcq",
+    "library",
+    "explanation",
 ]
 
 MIDDLEWARE = [
