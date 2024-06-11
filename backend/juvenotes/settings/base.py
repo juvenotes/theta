@@ -47,16 +47,15 @@ INSTALLED_APPS = [
     "defender",
     "django_guid",
     "anymail",
-    'rest_framework_simplejwt.token_blacklist', 
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
-    
-
+    "rest_framework_simplejwt.token_blacklist",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    # all auth
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.google",
     # Local apps
     "common",
     "users",
@@ -66,9 +65,34 @@ INSTALLED_APPS = [
 ]
 
 REST_AUTH = {
-    'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'juvenotes-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'refresh-token',
+    "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
+    "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
+    "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
+    "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
+    "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
+    "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
+    "PASSWORD_CHANGE_SERIALIZER": "dj_rest_auth.serializers.PasswordChangeSerializer",
+    "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
+    "REGISTER_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    # 'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
+    "TOKEN_MODEL": None,
+    "TOKEN_CREATOR": "dj_rest_auth.utils.default_create_token",
+    "PASSWORD_RESET_USE_SITES_DOMAIN": False,
+    "OLD_PASSWORD_FIELD_ENABLED": False,
+    "LOGOUT_ON_PASSWORD_CHANGE": True,
+    "SESSION_LOGIN": True,
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "juvenotes-auth",
+    "JWT_AUTH_REFRESH_COOKIE": "refresh-token",
+    "JWT_AUTH_REFRESH_COOKIE_PATH": "/",
+    "JWT_AUTH_SECURE": True,
+    "JWT_AUTH_HTTPONLY": True,
+    "JWT_AUTH_SAMESITE": "Lax",
+    "JWT_AUTH_RETURN_EXPIRATION": False,
+    "JWT_AUTH_COOKIE_USE_CSRF": False,
+    "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": True,
 }
 
 MIDDLEWARE = [
@@ -84,7 +108,7 @@ MIDDLEWARE = [
     "csp.middleware.CSPMiddleware",
     "defender.middleware.FailedLoginMiddleware",
     "django_guid.middleware.guid_middleware",
-
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "juvenotes.urls"
@@ -136,8 +160,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
@@ -153,7 +177,6 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
-
     "ALGORITHM": "HS256",
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
@@ -161,23 +184,18 @@ SIMPLE_JWT = {
     "JSON_ENCODER": None,
     "JWK_URL": None,
     "LEEWAY": 0,
-
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-
     "JTI_CLAIM": "jti",
-
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
     # "TOKEN_OBTAIN_SERIALIZER": "custom.serializers.MyTokenObtainPairSerializer",
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
@@ -186,6 +204,13 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+# Django-allauth
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
 
 ######################################################################
 # Unfold
@@ -328,4 +353,4 @@ CSP_IMG_SRC = [
 # DEFENDER_LOGIN_FAILURE_LIMIT = 3
 # DEFENDER_COOLOFF_TIME = 300  # 5 minutes
 # DEFENDER_LOCKOUT_TEMPLATE = "defender/lockout.html"
-# DEFENDER_REDIS_URL = config("REDIS_URL") 
+# DEFENDER_REDIS_URL = config("REDIS_URL")
