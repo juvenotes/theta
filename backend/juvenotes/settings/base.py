@@ -42,19 +42,34 @@ INSTALLED_APPS = [
     "webpack_loader",
     "import_export",
     "rest_framework",
-    "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "drf_spectacular",
     "defender",
     "django_guid",
     "anymail",
     'rest_framework_simplejwt.token_blacklist', 
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    
+
+    # Local apps
     "common",
     "users",
     "mcq",
     "library",
     "explanation",
 ]
+
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'juvenotes-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'refresh-token',
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -121,8 +136,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
