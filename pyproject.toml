@@ -40,6 +40,7 @@ dj-rest-auth = {extras = ["with-social"], version = "^6.0.0"}
 django-tree-queries = "^0.19.0"
 django-taggit = "^5.0.1"
 django-allauth = "^0.61.0"
+django-notifications-hq = "^1.8.3"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.7"
