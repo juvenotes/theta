@@ -1,3 +1,9 @@
+from django.contrib.auth.views import PasswordResetView
+from django.http import JsonResponse
+
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from dj_rest_auth.registration.views import SocialLoginView, VerifyEmailView
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions, status, viewsets
 from rest_framework.decorators import action
@@ -6,8 +12,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
-from .serializers import AdditionalInfoSerializer, UserSerializer, CustomTokenObtainPairSerializer
-
+from .serializers import AdditionalInfoSerializer, CustomTokenObtainPairSerializer, UserSerializer
 
 
 class PersonalizationViewSet(viewsets.ModelViewSet):
@@ -35,3 +40,21 @@ class PersonalizationViewSet(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
             return super(PersonalizationViewSet, self).get_permissions()
+
+class CustomPasswordResetView(PasswordResetView):
+    def form_valid(self, form):
+        super().form_valid(form)
+        return JsonResponse({'message': 'Password reset email sent.'}, status=200)
+    
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    callback_url = "http://localhost:3000/"
+    client_class = OAuth2Client
+
+class CustomVerifyEmailView(VerifyEmailView):
+    def get(self, request, *args, **kwargs):
+        # You can customize the response here
+        response = super().get(request, *args, **kwargs)
+        # Assuming you want to return a simple JSON response indicating success
+        return JsonResponse({'message': 'Email verified successfully'}, status=200)

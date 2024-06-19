@@ -82,6 +82,14 @@ class User(AbstractBaseUser, PermissionsMixin, IndexedTimeStampedModel):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []  # noqa: RUF012
 
+    @property
+    def is_manager(self):
+        return hasattr(self, 'manager')
+
+    @property
+    def is_contributor(self):
+        return hasattr(self, 'contributor')
+
     def get_full_name(self):
         return self.email
 

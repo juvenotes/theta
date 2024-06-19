@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 #     }
 
 INSTALLED_APPS = [
-    "unfold",
+    # "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -42,20 +42,22 @@ INSTALLED_APPS = [
     "webpack_loader",
     "import_export",
     "rest_framework",
-    "rest_framework_simplejwt",
+    "rest_framework.authtoken",
+    # "rest_framework_simplejwt",
     "drf_spectacular",
     "defender",
     "django_guid",
     "anymail",
-    "rest_framework_simplejwt.token_blacklist",
-    "dj_rest_auth",
-    "dj_rest_auth.registration",
+    "authemail",
+    # "rest_framework_simplejwt.token_blacklist",
+    # "dj_rest_auth",
+    # "dj_rest_auth.registration",
     # all auth
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.facebook",
-    "allauth.socialaccount.providers.google",
+    # "allauth",
+    # "allauth.account",
+    # "allauth.socialaccount",
+    # "allauth.socialaccount.providers.facebook",
+    # "allauth.socialaccount.providers.google",
     # Local apps
     "common",
     "users",
@@ -64,36 +66,36 @@ INSTALLED_APPS = [
     "explanation",
 ]
 
-REST_AUTH = {
-    "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
-    "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
-    "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
-    "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
-    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-    "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
-    "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
-    "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
-    "PASSWORD_CHANGE_SERIALIZER": "dj_rest_auth.serializers.PasswordChangeSerializer",
-    "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
-    "REGISTER_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
-    # 'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
-    "TOKEN_MODEL": None,
-    "TOKEN_CREATOR": "dj_rest_auth.utils.default_create_token",
-    "PASSWORD_RESET_USE_SITES_DOMAIN": False,
-    "OLD_PASSWORD_FIELD_ENABLED": False,
-    "LOGOUT_ON_PASSWORD_CHANGE": True,
-    "SESSION_LOGIN": True,
-    "USE_JWT": True,
-    "JWT_AUTH_COOKIE": "juvenotes-auth",
-    "JWT_AUTH_REFRESH_COOKIE": "refresh-token",
-    "JWT_AUTH_REFRESH_COOKIE_PATH": "/",
-    "JWT_AUTH_SECURE": True,
-    "JWT_AUTH_HTTPONLY": True,
-    "JWT_AUTH_SAMESITE": "Lax",
-    "JWT_AUTH_RETURN_EXPIRATION": False,
-    "JWT_AUTH_COOKIE_USE_CSRF": False,
-    "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": False,
-}
+# REST_AUTH = {
+#     "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
+#     "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
+#     "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
+#     "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
+#     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+#     "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
+#     "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
+#     "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
+#     "PASSWORD_CHANGE_SERIALIZER": "dj_rest_auth.serializers.PasswordChangeSerializer",
+#     "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
+#     "REGISTER_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+#     # 'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
+#     "TOKEN_MODEL": None,
+#     "TOKEN_CREATOR": "dj_rest_auth.utils.default_create_token",
+#     "PASSWORD_RESET_USE_SITES_DOMAIN": False,
+#     "OLD_PASSWORD_FIELD_ENABLED": False,
+#     "LOGOUT_ON_PASSWORD_CHANGE": True,
+#     "SESSION_LOGIN": True,
+#     "USE_JWT": True,
+#     "JWT_AUTH_COOKIE": "juvenotes-auth",
+#     "JWT_AUTH_REFRESH_COOKIE": "refresh-token",
+#     "JWT_AUTH_REFRESH_COOKIE_PATH": "/",
+#     "JWT_AUTH_SECURE": True,
+#     "JWT_AUTH_HTTPONLY": False,
+#     "JWT_AUTH_SAMESITE": "Lax",
+#     "JWT_AUTH_RETURN_EXPIRATION": False,
+#     "JWT_AUTH_COOKIE_USE_CSRF": False,
+#     "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": False,
+# }
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -160,9 +162,10 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -210,6 +213,34 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
+
+# all-auth
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": config("GOOGLE_CLIENT_ID"),
+            "secret": config("GOOGLE_SECRET"),
+            "key": "",
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "VERIFIED_EMAIL": True,
+    },
+}
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# <EMAIL_CONFIRM_REDIRECT_BASE_URL>/<key>
+EMAIL_CONFIRM_REDIRECT_BASE_URL = "http://localhost:3000/email/confirm/"
+
+# <PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL>/<uidb64>/<token>/
+PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = "http://localhost:3000/password-reset/confirm/"
 
 
 ######################################################################
