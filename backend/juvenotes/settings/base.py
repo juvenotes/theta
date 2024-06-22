@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "common",
     "users",
     "mcq",
+    "saq",
 ]
 
 MIDDLEWARE = [
