@@ -771,20 +771,6 @@ Django = ">=3.2"
 tablib = {version = "3.5.0", extras = ["html", "ods", "xls", "xlsx", "yaml"]}
 
 [[package]]
-name = "django-ipware"
-version = "7.0.1"
-description = "A Django application to retrieve user's IP address"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "django-ipware-7.0.1.tar.gz", hash = "sha256:d9ec43d2bf7cdf216fed8d494a084deb5761a54860a53b2e74346a4f384cff47"},
-    {file = "django_ipware-7.0.1-py2.py3-none-any.whl", hash = "sha256:db16bbee920f661ae7f678e4270460c85850f03c6761a4eaeb489bdc91f64709"},
-]
-
-[package.dependencies]
-python-ipware = ">=2.0.3"
-
-[[package]]
 name = "django-js-reverse"
 version = "0.10.2"
 description = "Javascript url handling for Django that doesn't hurt."
@@ -876,23 +862,6 @@ redis = ">=3,<4.0.0 || >4.0.0,<4.0.1 || >4.0.1"
 
 [package.extras]
 hiredis = ["redis[hiredis] (>=3,!=4.0.0,!=4.0.1)"]
-
-[[package]]
-name = "django-rest-authemail"
-version = "2.1.7"
-description = "A RESTful API for user signup and authentication using email addresses"
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-rest-authemail-2.1.7.tar.gz", hash = "sha256:0256958c5067f481c9026d75ae3adae36dc0c9720d0a930f7dee475ddfb4a4b9"},
-    {file = "django_rest_authemail-2.1.7-py3-none-any.whl", hash = "sha256:ef8a6a8344d7f24af9b202c83b0634c053914c28ba62557fa58f1851b0170b24"},
-]
-
-[package.dependencies]
-Django = ">=2.2.8"
-django-ipware = ">=4.0.2"
-djangorestframework = ">=3.11.0"
-requests = ">=2.3.0"
 
 [[package]]
 name = "django-storages"
@@ -1600,20 +1569,6 @@ files = [
 ]
 
 [[package]]
-name = "python-ipware"
-version = "3.0.0"
-description = "A Python package to retrieve user's IP address"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "python_ipware-3.0.0-py3-none-any.whl", hash = "sha256:fc936e6e7ec9fcc107f9315df40658f468ac72f739482a707181742882e36b60"},
-    {file = "python_ipware-3.0.0.tar.gz", hash = "sha256:9117b1c4dddcb5d5ca49e6a9617de2fc66aec2ef35394563ac4eecabdf58c062"},
-]
-
-[package.extras]
-dev = ["coverage[toml]", "coveralls (>=3.3,<4.0)", "ruff", "twine"]
-
-[[package]]
 name = "python3-openid"
 version = "3.2.0"
 description = "OpenID support for modern servers and consumers."
@@ -2218,4 +2173,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "228f712bd95a661de47629c0c157b25c7daa8e602057c4a61f150d7367502465"
+content-hash = "577336b2a191240852d351543a30daceca6d725d89c210c54e58c220819bfbee"
