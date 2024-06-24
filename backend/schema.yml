@@ -4,6 +4,35 @@ info:
   version: 0.1.0
   description: Endpoints to manage our application
 paths:
+  /auth/account-confirm-email/:
+    post:
+      operationId: auth_account_confirm_email_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
   /auth/login/:
     post:
       operationId: auth_login_create
@@ -33,7 +62,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '200':
@@ -56,7 +84,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '200':
@@ -91,7 +118,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -125,7 +151,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '200':
@@ -162,7 +187,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '200':
@@ -193,7 +217,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -220,7 +243,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '201':
           content:
@@ -244,7 +266,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -278,7 +299,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -312,7 +332,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -335,7 +354,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '204':
           description: No response body
@@ -360,14 +378,13 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JWT'
+                $ref: '#/components/schemas/RestAuthDetail'
           description: ''
   /auth/registration/resend-email/:
     post:
@@ -385,11 +402,11 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/ResendEmailVerification'
+        required: true
       security:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '201':
@@ -419,7 +436,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '200':
@@ -500,7 +516,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -536,7 +551,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -572,7 +586,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -602,7 +615,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -630,7 +642,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '201':
           content:
@@ -654,7 +665,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -689,7 +699,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -723,7 +732,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -746,7 +754,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '204':
           description: No response body
@@ -782,7 +789,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -818,7 +824,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '201':
           content:
@@ -846,7 +851,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -882,7 +886,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -917,7 +920,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '200':
           content:
@@ -944,7 +946,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       responses:
         '204':
           description: No response body
@@ -959,7 +960,6 @@ paths:
       - jwtAuth: []
       - jwtHeaderAuth: []
       - jwtCookieAuth: []
-      - cookieAuth: []
       - {}
       responses:
         '200':
@@ -1318,15 +1318,17 @@ components:
           type: string
           writeOnly: true
       required:
+      - email
       - password1
       - password2
-      - username
     ResendEmailVerification:
       type: object
       properties:
         email:
           type: string
           format: email
+      required:
+      - email
     RestAuthDetail:
       type: object
       properties:
@@ -1406,10 +1408,6 @@ components:
       required:
       - key
   securitySchemes:
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: sessionid
     jwtAuth:
       type: http
       scheme: bearer

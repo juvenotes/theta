@@ -12,8 +12,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
-from .serializers import AdditionalInfoSerializer, CustomTokenObtainPairSerializer, UserSerializer
-
+from .serializers import AdditionalInfoSerializer, UserSerializer, CustomTokenObtainPairSerializer
 
 class PersonalizationViewSet(viewsets.ModelViewSet):
     serializer_class = AdditionalInfoSerializer
@@ -54,7 +53,5 @@ class GoogleLogin(SocialLoginView):
 
 class CustomVerifyEmailView(VerifyEmailView):
     def get(self, request, *args, **kwargs):
-        # You can customize the response here
         response = super().get(request, *args, **kwargs)
-        # Assuming you want to return a simple JSON response indicating success
         return JsonResponse({'message': 'Email verified successfully'}, status=200)

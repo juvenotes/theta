@@ -48,16 +48,15 @@ INSTALLED_APPS = [
     "defender",
     "django_guid",
     "anymail",
-    "authemail",
-    # "rest_framework_simplejwt.token_blacklist",
-    # "dj_rest_auth",
-    # "dj_rest_auth.registration",
+    "rest_framework_simplejwt.token_blacklist",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
     # all auth
-    # "allauth",
-    # "allauth.account",
-    # "allauth.socialaccount",
-    # "allauth.socialaccount.providers.facebook",
-    # "allauth.socialaccount.providers.google",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.google",
     # Local apps
     "common",
     "users",
@@ -66,36 +65,40 @@ INSTALLED_APPS = [
     "explanation",
 ]
 
-# REST_AUTH = {
-#     "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
-#     "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
-#     "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
-#     "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
-#     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-#     "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
-#     "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
-#     "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
-#     "PASSWORD_CHANGE_SERIALIZER": "dj_rest_auth.serializers.PasswordChangeSerializer",
-#     "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
-#     "REGISTER_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
-#     # 'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
-#     "TOKEN_MODEL": None,
-#     "TOKEN_CREATOR": "dj_rest_auth.utils.default_create_token",
-#     "PASSWORD_RESET_USE_SITES_DOMAIN": False,
-#     "OLD_PASSWORD_FIELD_ENABLED": False,
-#     "LOGOUT_ON_PASSWORD_CHANGE": True,
-#     "SESSION_LOGIN": True,
-#     "USE_JWT": True,
-#     "JWT_AUTH_COOKIE": "juvenotes-auth",
-#     "JWT_AUTH_REFRESH_COOKIE": "refresh-token",
-#     "JWT_AUTH_REFRESH_COOKIE_PATH": "/",
-#     "JWT_AUTH_SECURE": True,
-#     "JWT_AUTH_HTTPONLY": False,
-#     "JWT_AUTH_SAMESITE": "Lax",
-#     "JWT_AUTH_RETURN_EXPIRATION": False,
-#     "JWT_AUTH_COOKIE_USE_CSRF": False,
-#     "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": False,
-# }
+REST_AUTH = {
+    "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
+    "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
+    "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
+    "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
+    "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
+    "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
+    "PASSWORD_CHANGE_SERIALIZER": "dj_rest_auth.serializers.PasswordChangeSerializer",
+    "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
+    "REGISTER_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    # 'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
+    "TOKEN_MODEL": None,
+    "TOKEN_CREATOR": "dj_rest_auth.utils.default_create_token",
+    "PASSWORD_RESET_USE_SITES_DOMAIN": False,
+    "OLD_PASSWORD_FIELD_ENABLED": False,
+    "LOGOUT_ON_PASSWORD_CHANGE": True,
+    "SESSION_LOGIN": True,
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "juvenotes-auth",
+    "JWT_AUTH_REFRESH_COOKIE": "refresh-token",
+    "JWT_AUTH_REFRESH_COOKIE_PATH": "/",
+    "JWT_AUTH_SECURE": True,
+    "JWT_AUTH_HTTPONLY": False,
+    "JWT_AUTH_SAMESITE": "Lax",
+    "JWT_AUTH_RETURN_EXPIRATION": False,
+    "JWT_AUTH_COOKIE_USE_CSRF": False,
+    "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": False,
+}
+
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserSerializer",
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -162,16 +165,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
-        # "rest_framework_simplejwt.authentication.JWTAuthentication",
-        # "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
-        # "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+REST_USE_JWT = True
 
 # djangorestframework-simplejwt
 SIMPLE_JWT = {
@@ -236,16 +239,12 @@ SOCIALACCOUNT_PROVIDERS = {
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# <EMAIL_CONFIRM_REDIRECT_BASE_URL>/<key>
-EMAIL_CONFIRM_REDIRECT_BASE_URL = "http://localhost:3000/email/confirm/"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
-# <PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL>/<uidb64>/<token>/
-PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = "http://localhost:3000/password-reset/confirm/"
-
-
-######################################################################
-# Unfold
-######################################################################
+# Unfold@
 UNFOLD = {
     "SITE_HEADER": _("Juvenotes Admin Site - Manage Resources"),
     "SITE_TITLE": _("Juvenotes Admin Site"),

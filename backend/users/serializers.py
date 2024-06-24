@@ -1,4 +1,4 @@
-from django.contrib.auth.hashers import make_password
+from django.db import transaction
 
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -27,6 +27,8 @@ class UserSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["id", "is_active", "is_staff", "is_superuser", "created", "modified", "last_login"]
 
+    # Define transaction.atomic to rollback the save operation in case of error
+    @transaction.atomic
     def create(self, validated_data):
         password = validated_data.pop('password')
         user = User(**validated_data)
