@@ -4,7 +4,596 @@ info:
   version: 0.1.0
   description: Endpoints to manage our application
 paths:
-  /api/quizzes/:
+  /auth/account-confirm-email/:
+    post:
+      operationId: auth_account_confirm_email_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/login/:
+    post:
+      operationId: auth_login_create
+      description: |-
+        Check the credentials and return the REST Token
+        if the credentials are valid and authenticated.
+        Calls Django Auth login method to register User ID
+        in Django session framework
+
+        Accept the following POST parameters: username, password
+        Return the REST Framework Token Object's key.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWT'
+          description: ''
+  /auth/logout/:
+    post:
+      operationId: auth_logout_create
+      description: |-
+        Calls Django logout method and delete the Token object
+        assigned to the current User object.
+
+        Accepts/Returns nothing.
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/password/change/:
+    post:
+      operationId: auth_password_change_create
+      description: |-
+        Calls Django Auth SetPasswordForm save method.
+
+        Accepts the following POST parameters: new_password1, new_password2
+        Returns the success/fail message.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/password/reset/:
+    post:
+      operationId: auth_password_reset_create
+      description: |-
+        Calls Django Auth PasswordResetForm save method.
+
+        Accepts the following POST parameters: email
+        Returns the success/fail message.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/password/reset/confirm/:
+    post:
+      operationId: auth_password_reset_confirm_create
+      description: |-
+        Password reset e-mail link is confirmed, therefore
+        this resets the user's password.
+
+        Accepts the following POST parameters: token, uid,
+            new_password1, new_password2
+        Returns the success/fail message.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/personalization/:
+    get:
+      operationId: auth_personalization_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdditionalInfoList'
+          description: ''
+    post:
+      operationId: auth_personalization_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+  /auth/personalization/{id}/:
+    get:
+      operationId: auth_personalization_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+    put:
+      operationId: auth_personalization_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdditionalInfo'
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+    patch:
+      operationId: auth_personalization_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdditionalInfo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdditionalInfo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdditionalInfo'
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalInfo'
+          description: ''
+    delete:
+      operationId: auth_personalization_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /auth/registration/:
+    post:
+      operationId: auth_registration_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/registration/resend-email/:
+    post:
+      operationId: auth_registration_resend_email_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendEmailVerification'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResendEmailVerification'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResendEmailVerification'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/registration/verify-email/:
+    post:
+      operationId: auth_registration_verify_email_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+        required: true
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /auth/token/refresh/:
+    post:
+      operationId: auth_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /auth/token/verify/:
+    post:
+      operationId: auth_token_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
+          description: ''
+  /auth/user/:
+    get:
+      operationId: auth_user_retrieve
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+          description: ''
+    put:
+      operationId: auth_user_update
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+          description: ''
+    patch:
+      operationId: auth_user_partial_update
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+      security:
+      - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+          description: ''
+  /quizzes/:
     get:
       operationId: quizzes_list
       parameters:
@@ -23,8 +612,9 @@ paths:
       tags:
       - quizzes
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -49,8 +639,9 @@ paths:
               $ref: '#/components/schemas/Quiz'
         required: true
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '201':
           content:
@@ -58,7 +649,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Quiz'
           description: ''
-  /api/quizzes/{id}/:
+  /quizzes/{id}/:
     get:
       operationId: quizzes_retrieve
       parameters:
@@ -71,8 +662,9 @@ paths:
       tags:
       - quizzes
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -104,8 +696,9 @@ paths:
               $ref: '#/components/schemas/Quiz'
         required: true
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -136,8 +729,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedQuiz'
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -157,12 +751,13 @@ paths:
       tags:
       - quizzes
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '204':
           description: No response body
-  /api/quizzes/{quiz_pk}/questions/{id}/:
+  /quizzes/{quiz_pk}/questions/{id}/:
     get:
       operationId: quizzes_questions_list
       parameters:
@@ -191,8 +786,9 @@ paths:
       tags:
       - quizzes
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -225,8 +821,9 @@ paths:
               $ref: '#/components/schemas/Question'
         required: true
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '201':
           content:
@@ -234,7 +831,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Question'
           description: ''
-  /api/quizzes/{quiz_pk}/questions/{id}/{id}/:
+  /quizzes/{quiz_pk}/questions/{id}/{id}/:
     get:
       operationId: quizzes_questions_retrieve
       parameters:
@@ -251,8 +848,9 @@ paths:
       tags:
       - quizzes
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -285,8 +883,9 @@ paths:
               $ref: '#/components/schemas/Question'
         required: true
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -318,8 +917,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedQuestion'
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '200':
           content:
@@ -343,12 +943,13 @@ paths:
       tags:
       - quizzes
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       responses:
         '204':
           description: No response body
-  /api/rest/rest-check/:
+  /rest/rest-check/:
     get:
       operationId: rest_rest_check_retrieve
       description: This endpoint checks if the REST API is working.
@@ -356,420 +957,13 @@ paths:
       tags:
       - rest
       security:
-      - cookieAuth: []
       - jwtAuth: []
+      - jwtHeaderAuth: []
+      - jwtCookieAuth: []
       - {}
       responses:
         '200':
           description: Successful Response
-  /api/token/:
-    post:
-      operationId: token_create
-      description: |-
-        Takes a set of user credentials and returns an access and refresh JSON web
-        token pair to prove the authentication of those credentials.
-      tags:
-      - token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenObtainPair'
-          description: ''
-  /api/token/refresh/:
-    post:
-      operationId: token_refresh_create
-      description: |-
-        Takes a refresh type JSON web token and returns an access type JSON web
-        token if the refresh token is valid.
-      tags:
-      - token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenRefresh'
-          description: ''
-  /api/users/:
-    get:
-      operationId: users_list
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      tags:
-      - users
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedUserList'
-          description: ''
-    post:
-      operationId: users_create
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      - {}
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-  /api/users/{id}/:
-    get:
-      operationId: users_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-    put:
-      operationId: users_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-    patch:
-      operationId: users_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUser'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedUser'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedUser'
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-    delete:
-      operationId: users_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/users/login/:
-    post:
-      operationId: users_login_create
-      description: This action allows a user to login
-      summary: User Login
-      tags:
-      - users
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
-  /api/users/logout/:
-    post:
-      operationId: users_logout_create
-      description: This action allows a user to logout
-      summary: User Logout
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/users/personalization/:
-    get:
-      operationId: users_personalization_list
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      tags:
-      - users
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedAdditionalInfoList'
-          description: ''
-    post:
-      operationId: users_personalization_create
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AdditionalInfo'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AdditionalInfo'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AdditionalInfo'
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdditionalInfo'
-          description: ''
-  /api/users/personalization/{id}/:
-    get:
-      operationId: users_personalization_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdditionalInfo'
-          description: ''
-    put:
-      operationId: users_personalization_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AdditionalInfo'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AdditionalInfo'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AdditionalInfo'
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdditionalInfo'
-          description: ''
-    patch:
-      operationId: users_personalization_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedAdditionalInfo'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedAdditionalInfo'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedAdditionalInfo'
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdditionalInfo'
-          description: ''
-    delete:
-      operationId: users_personalization_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
-      tags:
-      - users
-      security:
-      - cookieAuth: []
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
 components:
   schemas:
     AdditionalInfo:
@@ -840,6 +1034,32 @@ components:
         * `EG` - Egerton
         * `MMUST` - MMUST
         * `MSU` - Maseno University
+    JWT:
+      type: object
+      description: Serializer for JWT authentication.
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserDetails'
+      required:
+      - access
+      - refresh
+      - user
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - password
     PaginatedAdditionalInfoList:
       type: object
       required:
@@ -909,29 +1129,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Quiz'
-    PaginatedUserList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
     PaperTypeEnum:
       enum:
       - EOR
@@ -940,6 +1137,46 @@ components:
       description: |-
         * `EOR` - End of Rotation
         * `EOY` - End of Year
+    PasswordChange:
+      type: object
+      properties:
+        new_password1:
+          type: string
+          maxLength: 128
+        new_password2:
+          type: string
+          maxLength: 128
+      required:
+      - new_password1
+      - new_password2
+    PasswordReset:
+      type: object
+      description: Serializer for requesting a password reset e-mail.
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    PasswordResetConfirm:
+      type: object
+      description: Serializer for confirming a password reset attempt.
+      properties:
+        new_password1:
+          type: string
+          maxLength: 128
+        new_password2:
+          type: string
+          maxLength: 128
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - new_password1
+      - new_password2
+      - token
+      - uid
     PatchedAdditionalInfo:
       type: object
       properties:
@@ -998,51 +1235,18 @@ components:
         related_topic:
           type: integer
           nullable: true
-    PatchedUser:
+    PatchedUserDetails:
       type: object
+      description: User model w/o password
       properties:
-        id:
+        pk:
           type: integer
           readOnly: true
-        username:
-          type: string
-          nullable: true
-          maxLength: 255
+          title: ID
         email:
           type: string
           format: email
-          maxLength: 255
-        password:
-          type: string
-          writeOnly: true
-        is_active:
-          type: boolean
           readOnly: true
-          description: Designates whether this user should be treated as active. Unselect
-            this instead of deleting accounts.
-        is_staff:
-          type: boolean
-          readOnly: true
-          description: Designates whether the user can log into this admin site.
-        is_superuser:
-          type: boolean
-          readOnly: true
-          title: Superuser status
-          description: Designates that this user has all permissions without explicitly
-            assigning them.
-        created:
-          type: string
-          format: date-time
-          readOnly: true
-        modified:
-          type: string
-          format: date-time
-          readOnly: true
-        last_login:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
     Question:
       type: object
       properties:
@@ -1097,6 +1301,42 @@ components:
       - id
       - title
       - unit
+    Register:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 255
+          minLength: 1
+        email:
+          type: string
+          format: email
+        password1:
+          type: string
+          writeOnly: true
+        password2:
+          type: string
+          writeOnly: true
+      required:
+      - email
+      - password1
+      - password2
+    ResendEmailVerification:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    RestAuthDetail:
+      type: object
+      properties:
+        detail:
+          type: string
+          readOnly: true
+      required:
+      - detail
     RoleEnum:
       enum:
       - ST
@@ -1125,26 +1365,6 @@ components:
         * `NR` - Nurse
         * `PH` - Pharmacist
         * `DT` - Dentist
-    TokenObtainPair:
-      type: object
-      properties:
-        email:
-          type: string
-          writeOnly: true
-        password:
-          type: string
-          writeOnly: true
-        access:
-          type: string
-          readOnly: true
-        refresh:
-          type: string
-          readOnly: true
-      required:
-      - access
-      - email
-      - password
-      - refresh
     TokenRefresh:
       type: object
       properties:
@@ -1153,71 +1373,50 @@ components:
           readOnly: true
         refresh:
           type: string
-          writeOnly: true
       required:
       - access
       - refresh
-    User:
+    TokenVerify:
       type: object
       properties:
-        id:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
+    UserDetails:
+      type: object
+      description: User model w/o password
+      properties:
+        pk:
           type: integer
           readOnly: true
-        username:
-          type: string
-          nullable: true
-          maxLength: 255
+          title: ID
         email:
           type: string
           format: email
-          maxLength: 255
-        password:
+          readOnly: true
+      required:
+      - email
+      - pk
+    VerifyEmail:
+      type: object
+      properties:
+        key:
           type: string
           writeOnly: true
-        is_active:
-          type: boolean
-          readOnly: true
-          description: Designates whether this user should be treated as active. Unselect
-            this instead of deleting accounts.
-        is_staff:
-          type: boolean
-          readOnly: true
-          description: Designates whether the user can log into this admin site.
-        is_superuser:
-          type: boolean
-          readOnly: true
-          title: Superuser status
-          description: Designates that this user has all permissions without explicitly
-            assigning them.
-        created:
-          type: string
-          format: date-time
-          readOnly: true
-        modified:
-          type: string
-          format: date-time
-          readOnly: true
-        last_login:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
       required:
-      - created
-      - email
-      - id
-      - is_active
-      - is_staff
-      - is_superuser
-      - last_login
-      - modified
-      - password
+      - key
   securitySchemes:
-    cookieAuth:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    jwtCookieAuth:
       type: apiKey
       in: cookie
-      name: sessionid
-    jwtAuth:
+      name: juvenotes-auth
+    jwtHeaderAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT

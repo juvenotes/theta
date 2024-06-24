@@ -4,6 +4,10 @@ from django.urls import include, path
 
 import django_js_reverse.views
 from common.routes import routes as common_routes
+from dj_rest_auth.registration.views import (
+    ConfirmEmailView,
+    VerifyEmailView,
+)
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -31,7 +35,6 @@ urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
     path("admin/defender/", include("defender.urls")),
     path("jsreverse/", django_js_reverse.views.urls_js, name="js_reverse"),
-    # path("api/", include(router.urls), name="api"),
     # drf-spectacular
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
@@ -44,10 +47,23 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/', include('dj_rest_auth.urls')),
+    path(
+        'auth/registration/account-confirm-email/<str:key>/',
+        ConfirmEmailView.as_view(),
+    ),
+    path('auth/registration/', include('dj_rest_auth.registration.urls')),
+    path(
+        'auth/account-confirm-email/',
+        VerifyEmailView.as_view(),
+        name='account_email_verification_sent'
+    ),
+    # path(
+    #     'auth/password/reset/confirm/<slug:uidb64>/<slug:token>/',
+    #     PasswordResetConfirmView.as_view(), name='password_reset_confirm'
+    # ),
 ]
 
 urlpatterns += [
-    path('auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]

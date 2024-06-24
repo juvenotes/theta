@@ -30,6 +30,8 @@ STORAGES = {
 
 AUTH_PASSWORD_VALIDATORS = []  # allow easy passwords only on local
 
+LOGIN_URL = 'https://localhost:8000/api-auth/login'
+
 # Celery
 CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="")
 CELERY_TASK_ALWAYS_EAGER = True

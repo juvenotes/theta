@@ -1,7 +1,6 @@
-from .views import PersonalizationViewSet, UserViewSet
+from .views import PersonalizationViewSet
 
 
 routes = [
-    {"regex": r"users", "viewset": UserViewSet, "basename": "user"},
-    {"regex": r"users/personalization", "viewset": PersonalizationViewSet, "basename": "personalization"},
+    {"regex": r"auth/personalization", "viewset": PersonalizationViewSet, "basename": "personalization"},
 ]
