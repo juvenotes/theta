@@ -1,5 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView
 from django.http import JsonResponse
+from django.views.generic import RedirectView
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -12,7 +14,8 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
-from .serializers import AdditionalInfoSerializer, UserSerializer, CustomTokenObtainPairSerializer
+from .serializers import AdditionalInfoSerializer, CustomTokenObtainPairSerializer, UserSerializer
+
 
 class PersonalizationViewSet(viewsets.ModelViewSet):
     serializer_class = AdditionalInfoSerializer
@@ -46,10 +49,20 @@ class CustomPasswordResetView(PasswordResetView):
         return JsonResponse({'message': 'Password reset email sent.'}, status=200)
     
 
-class GoogleLogin(SocialLoginView):
+class GoogleLoginView(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    callback_url = "http://localhost:3000/"
-    client_class = OAuth2Client
+    callback_url = "http://localhost:8000/"
+    client_class = OAuth2Client 
+
+class UserRedirectView(LoginRequiredMixin, RedirectView):
+    """
+    This view is needed by the dj-rest-auth-library in order to work the google login. It's a bug.
+    """
+
+    permanent = False
+
+    def get_redirect_url(self):
+        return "redirect-url"
 
 class CustomVerifyEmailView(VerifyEmailView):
     def get(self, request, *args, **kwargs):
