@@ -20,14 +20,14 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from users.routes import routes as users_routes
+from users.views import GoogleLoginView, UserRedirectView
 
 
 router = DefaultRouter()
 
 routes = common_routes + users_routes + mcq_routes
 for route in routes:
-    router.register(route["regex"], route["viewset"],
-                    basename=route["basename"])
+    router.register(route["regex"], route["viewset"], basename=route["basename"])
 
 urlpatterns = [
     # path("", include("common.urls"), name="common"),
@@ -47,17 +47,19 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path('auth/', include('dj_rest_auth.urls')),
+    path("auth/", include("dj_rest_auth.urls")),
     path(
-        'auth/registration/account-confirm-email/<str:key>/',
+        "auth/registration/account-confirm-email/<str:key>/",
         ConfirmEmailView.as_view(),
     ),
-    path('auth/registration/', include('dj_rest_auth.registration.urls')),
+    path("auth/registration/", include("dj_rest_auth.registration.urls")),
     path(
-        'auth/account-confirm-email/',
+        "auth/account-confirm-email/",
         VerifyEmailView.as_view(),
-        name='account_email_verification_sent'
+        name="account_email_verification_sent",
     ),
+    path("auth/google/login/", GoogleLoginView.as_view(), name="google_login"),
+    path("~redirect/", view=UserRedirectView.as_view(), name="redirect"),
     # path(
     #     'auth/password/reset/confirm/<slug:uidb64>/<slug:token>/',
     #     PasswordResetConfirmView.as_view(), name='password_reset_confirm'
@@ -65,5 +67,5 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('api-auth/', include('rest_framework.urls')),
+    path("api-auth/", include("rest_framework.urls")),
 ]
