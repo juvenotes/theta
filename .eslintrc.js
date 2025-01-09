@@ -1,12 +1,24 @@
 const path = require('path');
+const { plugin } = require('postcss');
 
 module.exports = {
   root: true,
-  extends: ['vinta/recommended'],
+  extends: ['plugin:vinta/recommended', 'airbnb', 'plugin: react/recommended' ],
   rules: {
     "default-param-last": "off",  // due to initialState in Redux
     "@babel/camelcase": "off"
   },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  plugins: [
+    'react',
+  ],
+  
   env: {
     es6: true,
     browser: true,

@@ -6,7 +6,18 @@
   "engines": {
     "node": ">=20 <21"
   },
-  "browserslist": "> 0.25%, not dead",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "main": "frontend/js/index.js",
   "scripts": {
     "test": "jest",
@@ -31,7 +42,21 @@
     "react-bootstrap": "~2.9.1",
     "react-dom": "~18.2.0",
     "react-redux": "~9.0.4",
-    "react-router": "~6.21.0"
+    "react-router": "~6.21.0",
+    "react-scripts": "5.0.0",
+    "react-icons": "^4.3.1",
+    "react-router-dom": "^6.2.1",
+    "webpack": "5.2.0",
+    "@syncfusion/ej2": "^19.4.48",
+    "@syncfusion/ej2-react-calendars": "^19.4.48",
+    "@syncfusion/ej2-react-charts": "^19.4.50",
+    "@syncfusion/ej2-react-dropdowns": "^19.4.52",
+    "@syncfusion/ej2-react-grids": "^19.4.50",
+    "@syncfusion/ej2-react-inputs": "^19.4.52",
+    "@syncfusion/ej2-react-kanban": "^19.4.48",
+    "@syncfusion/ej2-react-popups": "^19.4.52",
+    "@syncfusion/ej2-react-richtexteditor": "^19.4.50",
+    "@syncfusion/ej2-react-schedule": "^19.4.50"
   },
   "devDependencies": {
     "@babel/core": "~7.23.6",
@@ -40,7 +65,7 @@
     "@babel/node": "~7.22.19",
     "@babel/preset-env": "~7.23.6",
     "@babel/preset-react": "~7.23.3",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
+   
     "@testing-library/jest-dom": "~6.1.5",
     "@testing-library/react": "~14.1.2",
     "@testing-library/user-event": "~14.5.1",
@@ -50,7 +75,7 @@
     "circular-dependency-plugin": "~5.2.2",
     "css-loader": "~6.8.1",
     "eslint": "~8.56.0",
-    "eslint-config-vinta": "github:vintasoftware/eslint-config-vinta#9dd2803f4864a2e9942c636f78b367b4d5a56c67",
+
     "eslint-import-resolver-webpack": "~0.13.8",
     "eslint-plugin-import": "~2.29.1",
     "eslint-plugin-jest": "~27.6.0",
@@ -66,7 +91,7 @@
     "jest-environment-jsdom": "~29.7.0",
     "jest-transform-stub": "^2.0.0",
     "mini-css-extract-plugin": "~2.7.6",
-    "postcss": "~8.4.32",
+
     "postcss-loader": "~7.3.3",
     "prettier": "~3.1.1",
     "react-refresh": "^0.14.0",
@@ -78,6 +103,8 @@
     "webpack-bundle-tracker": "~3.0.0",
     "webpack-cli": "~5.1.4",
     "webpack-dev-server": "~4.15.1",
-    "whatwg-fetch": "~3.6.20"
+    "whatwg-fetch": "~3.6.20",
+    "tailwindcss": "^3.0.19",
+    "postcss": "^8.4.6"
   }
 }

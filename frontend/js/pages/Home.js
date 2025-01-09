@@ -29,13 +29,13 @@ const Home = () => {
         </div>
         <img alt="Django Negative Logo" src={DjangoImgSrc} />
       </div>
-      <h2>Rest API</h2>
+      {/* <h2>Rest API</h2>
       <p>{restCheck?.data?.payload?.result}</p>
       <Button variant="outline-dark" onClick={() => setShowBugComponent(true)}>
         Click to test if Sentry is capturing frontend errors! (Should only work
         in Production)
       </Button>
-      {showBugComponent && showBugComponent.field.notexist}
+      {showBugComponent && showBugComponent.field.notexist} */}
     </>
   );
 };
